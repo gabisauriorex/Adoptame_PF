@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Navbar() {
+function Dona() {
   return (
     <div>
-      <h2>navBar</h2>
+      <h3>Dona</h3>
     </div>
   )
 }
 
-export default Navbar
+export default Dona
