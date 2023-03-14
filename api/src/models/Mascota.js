@@ -11,6 +11,9 @@ const mascotaSchema = new Schema({
     max: 20,
   },
   description: { type: String },
+  vacunacion: {
+    type: String,
+  },
 });
 
 // Crear el modelo
