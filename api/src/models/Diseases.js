@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const enfermedadesSchema = new Schema({
+const diseasesSchema = new Schema({
   name: { type: String },
-  rating: {
+  severity: {
     type: Number,
     min: 0,
     max: 5,
@@ -12,6 +12,6 @@ const enfermedadesSchema = new Schema({
 });
 
 // Crear el modelo
-const Enfermedades = mongoose.model("Enfermedades", enfermedadesSchema);
+const Diseases = mongoose.model("Diseases", diseasesSchema);
 
-module.exports = Enfermedades;
+module.exports = Diseases;

@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const vacunasSchema = new Schema({
+const vaccinesSchema = new Schema({
   name: { type: String },
   dose: { type: Number },
   date: { type: Date }
 });
 
 // Crear el modelo
-const Vacunas = mongoose.model("Vacunas", vacunasSchema);
+const Vaccines = mongoose.model("Vaccines", vaccinesSchema);
 
-module.exports = Vacunas;
+module.exports = Vaccines;

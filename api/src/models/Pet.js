@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const mascotaSchema = new Schema({
+const petSchema = new Schema({
   name: { type: String },
   color: { type: String },
-  peso: { type: Number },
+  weight: { type: Number },
+  height: { type: Number},
   age: {
     type: Number,
     min: 0,
-    max: 20,
+    max: 30,
   },
+  image: { type: String},
   description: { type: String },
 });
 
 // Crear el modelo
-const Mascota = mongoose.model("Mascota", mascotaSchema);
+const Pet = mongoose.model("Pet", petSchema);
 
-module.exports = Mascota;
+module.exports = Pet;

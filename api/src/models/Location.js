@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ubicacionSchema = new Schema({
+const locationSchema = new Schema({
     province: { type: String },
 });
 
 // Crear el modelo
-const Ubicacion = mongoose.model("Ubicacion", ubicacionSchema);
+const Location = mongoose.model("Location", locationSchema);
 
-module.exports = Ubicacion;
+module.exports = Location;
