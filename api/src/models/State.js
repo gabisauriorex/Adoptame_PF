@@ -1,12 +1,18 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const stateSchema = new Schema({
-  idPet: { type: mongoose.Types.ObjectId },
-  lost: { type: Boolean },
-});
-
-// Crear el modelo
-const State = mongoose.model("State", stateSchema);
-
-module.exports = State;
+const { DataTypes } = require('sequelize');
+// Exportamos una funcion que define el modelo
+// Luego le injectamos la conexion a sequelize.
+module.exports = (sequelize) => {
+  // defino el modelo
+  sequelize.define('State', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
+    lost:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+  });
+};

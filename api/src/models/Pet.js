@@ -1,23 +1,42 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const petSchema = new Schema({
-  name: { type: String },
-  color: { type: String },
-  weight: { type: Number },
-  height: { type: Number},
-  age: {
-    type: Number,
-    min: 0,
-    max: 30,
-  },
-  image: { type: String},
-  description: { type: String },
-  idVaccines: { type: mongoose.Types.ObjectId },
-  idLocation: { type: mongoose.Types.ObjectId },
-});
-
-// Crear el modelo
-const Pet = mongoose.model("Pet", petSchema);
-
-module.exports = Pet;
+const { DataTypes } = require('sequelize');
+// Exportamos una funcion que define el modelo
+// Luego le injectamos la conexion a sequelize.
+module.exports = (sequelize) => {
+  // defino el modelo
+  sequelize.define('Pet', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
+    name:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    height:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    weight:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    age:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    color:{
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description:{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    image:{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+  });
+};

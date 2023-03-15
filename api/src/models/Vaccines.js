@@ -1,14 +1,18 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const vaccinesSchema = new Schema({
-  idPet: { type: mongoose.Types.ObjectId },
-  name: { type: String },
-  dose: { type: Number },
-  date: { type: Date }
-});
-
-// Crear el modelo
-const Vaccines = mongoose.model("Vaccines", vaccinesSchema);
-
-module.exports = Vaccines;
+const { DataTypes } = require('sequelize');
+// Exportamos una funcion que define el modelo
+// Luego le injectamos la conexion a sequelize.
+module.exports = (sequelize) => {
+  // defino el modelo
+  sequelize.define('Vaccines', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
+    name:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
+};
