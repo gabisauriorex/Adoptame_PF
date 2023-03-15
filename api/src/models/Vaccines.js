@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const vaccinesSchema = new Schema({
+  idPet: Pet._id,
   name: { type: String },
   dose: { type: Number },
   date: { type: Date }

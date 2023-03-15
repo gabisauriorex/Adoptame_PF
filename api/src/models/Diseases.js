@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const diseasesSchema = new Schema({
+  idPet: Pet._id,
   name: { type: String },
   severity: {
     type: Number,
