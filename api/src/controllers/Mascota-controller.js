@@ -1,5 +1,5 @@
 const { parse } = require("path");
-const Mascota = require("../models/Mascota");
+const Pet = require("../models/Pet");
 
 //CRUD API MASCOTAS
 
@@ -35,11 +35,18 @@ const createMascota = async (req, res) => {
 const getMascotas = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
-    const mascotas = Mascota.find();
 
-    mascotas
-      ? res.json(mascotas)
-      : res.status(404).json({ message: "Pet not Found 😕" });
+    if (name) {
+      //const petName = mascotas.filter( e => e.name.toLowerCase().inclides(name.toLowerCase()));
+      const petName = Pet.find({ "name": name })
+      res.json(petName);
+    } else {
+      const pets = Pet.find();
+      }
+      pets
+        ? res.json(pets)
+        : res.status(404).json({ message: "Pet not Found 😕" });
+    
 
     /*     if (!name) {
     } else { 

@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 
-const Mascota = require("./Mascota-routes");
+const Pet = require("./Mascota-routes");
 
-router.use("/Mascotas", Mascota);
+router.use("/Mascotas", Pet);
 
 module.exports = router;
