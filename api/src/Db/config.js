@@ -5,7 +5,7 @@ const database = {
   password: DB_PASSWORD,
   localhost: DB_HOST,
   port: DB_PORT,
-  name_schema: DB_NAME,
+  name: DB_NAME,
 };
 
 module.exports = database;
