@@ -13,6 +13,8 @@ const petSchema = new Schema({
   },
   image: { type: String},
   description: { type: String },
+  idVaccines: { type: mongoose.Types.ObjectId },
+  idLocation: { type: mongoose.Types.ObjectId },
 });
 
 // Crear el modelo
