@@ -7,7 +7,8 @@ import Card from "./components/Card/Card";
 import Dona from './components/Dona/Dona'
 import  Dashboard  from './common/NavBar/Dashboard'
 import About from "./pages/About/About";
-
+import Footer from './components/Footer/Footer'
+import Loading from "./components/Loading/Loading";
 function AllRoutes() {
   return (
     <div>
@@ -22,7 +23,10 @@ function AllRoutes() {
           <Route exact path="/Dona" element={<Dona/>} />
          <Route exact path="/About" element={<About/>} />
         </Routes>
-       </BrowserRouter>    
+       </BrowserRouter>   
+
+        {/* <Loading/>  */}
+      {/* <Footer/>  */}
      </div>
   );
 }
