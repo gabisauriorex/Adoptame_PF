@@ -1,5 +1,5 @@
 const app = require("./src/app");
-const { conn } = require("./src/Db/db");
+const { conn } = require("./src/db");
 
 conn.sync( {force: false }).then( () => {
     app.listen(3000, () => {
