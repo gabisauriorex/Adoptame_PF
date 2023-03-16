@@ -60,21 +60,20 @@ const getMascotas = async (req, res) => {
 };
 
 const mascotaById = async (req, res) => {
-  // try {
-  //   const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  //   //============de la BD==============================
-  //   const mascotaById = await Mascota.findById({ _id: id });
+    //============de la BD==============================
+    const mascotaById = await Pet.findByPk(id);
 
-  //   mascotaById
-  //     ? res.json(mascotaById)
-  //     : res.status(400).json("There are no pets with that id in the db");
+    mascotaById
+      ? res.json(mascotaById)
+      : res.status(400).json("There are no pets with that id in the db");
 
-  //   //=============================================
-  // } catch (error) {
-  //   res.status(400).send({ message: error.message });
-  // }
-  res.send("hi")
+    //=============================================
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
 };
 
 const deleteMascota = async (req, res) => {
