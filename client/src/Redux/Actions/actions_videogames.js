@@ -14,3 +14,7 @@ export function postPet(){
         }
     }
 }
+
+export const getPets = () => {
+  axios.get("/pets");
+};

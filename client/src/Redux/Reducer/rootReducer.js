@@ -4,7 +4,7 @@ const initialState = {
   pets: [],
 };
 
-export default function rootReducerVideogames(state = initialState, action) {
+export default function rootReducer(state = initialState, action) {
   // en esta accion mando todos los videogames al arrglo vacio
   switch (action.type) {
     case GET_PETS:

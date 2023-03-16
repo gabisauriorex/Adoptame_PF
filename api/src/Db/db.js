@@ -6,8 +6,9 @@ const fs = require("fs");
 
 const url = "mongodb+srv://admin:4Uu2hniHQ0UnmpWd@cluster0.5visjvr.mongodb.net/test"
 //const URL = "mongodb+srv://<nombre usuario>:password@cluster0.bsvp1kl.mongodb.net/Adoptame?retryWrites=true&w=majority";
-// "mongodb+srv://arieltecnico:1NOcCreyIcc5UnvH@cluster0.bsvp1kl.mongodb.net/Adoptame";
+//const URL = "mongodb+srv://arieltecnico:1NOcCreyIcc5UnvH@cluster0.bsvp1kl.mongodb.net/Adoptame";
 
+/* const { URL } = process.env; */
 const cnn = async () => {
   await mongoose.connect(url, {
     keepAlive: true,

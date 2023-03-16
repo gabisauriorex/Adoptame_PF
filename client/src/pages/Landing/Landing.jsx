@@ -1,0 +1,20 @@
+
+import React from 'react'
+import Button from '@mui/material/Button';
+import {Link} from 'react-router-dom';
+
+import './Landing.css'
+function Landing() {
+  return (
+    <div>
+      <h1 className=''>Landing</h1> 
+
+       <Link to="/Home">
+       <Button variant="contained">ir a home </Button>
+       </Link>
+
+    </div>
+  )
+}
+
+export default Landing
