@@ -20,7 +20,8 @@ export const pests = [
      color
      raza 
      sexo
-    orden A-Z Z-A
+    orden A-Z Z-A 
+    y otrs
     
     
     */
