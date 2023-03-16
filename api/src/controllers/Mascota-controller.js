@@ -1,4 +1,6 @@
 const { parse } = require("path");
+//const Pet = require("../models/Pet");
+const { Pet } = require("../db")
 const {Pet} = require("../db.js");
 
 //CRUD API MASCOTAS
@@ -18,16 +20,18 @@ const createMascota = async (req, res) => {
     
     if (!image) image = " ";
 
-    let newMascota = await Pet.create ({
+    const newMascota = await Pet.create({
+
       animal,
       breed,
       height: parseInt(height) || 0,
       weight: parseInt(weight) || 0, 
-      age: parseInt(age) || 0, 
+      age, 
       color,
       description, 
       image,
-      isLost
+      isLost: isLost || true,
+
     });
 
     newMascota
@@ -41,52 +45,37 @@ const createMascota = async (req, res) => {
 const getMascotas = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
+    const pets = await Pet.findAll();
 
     if (name) {
-      //const petName = mascotas.filter( e => e.name.toLowerCase().inclides(name.toLowerCase()));
-      const petName = Pet.find({ "name": name })
+      const petName = Pet.filter( e => e.name.toLowerCase().inclides(name.toLowerCase()));
       res.json(petName);
-    } else {
-      var pets = Pet.find();
-      }
-      pets
+    }
+    pets
         ? res.json(pets)
         : res.status(404).send({message:error.message})
     
-
-    /*     if (!name) {
-    } else { 
-    //FILTRA Y OBLIGADAMENTE LOS DEBE PASAR A MINUSUCLAS PARA PODER COMPARAR HACIENDO QUE IGNORE SI ELLA MAYUSCULAS /MISUCULAS
-    let searchGame = allGames.filter((game) =>
-      game.name.toLowerCase().includes(name.toLowerCase())
-    );
-
-    searchGame.length
-      ? res.status(200).json(searchGame)
-      : res.status(404).json({
-          message: "Videogame not Found 😕",
-        });
-     } */
   } catch (error) {
     res.status(400).send({ message: error });
   }
 };
 
 const mascotaById = async (req, res) => {
-  try {
-    const { id } = req.params;
+  // try {
+  //   const { id } = req.params;
 
-    //============de la BD==============================
-    const mascotaById = await Mascota.findById({ _id: id });
+  //   //============de la BD==============================
+  //   const mascotaById = await Mascota.findById({ _id: id });
 
-    mascotaById
-      ? res.json(mascotaById)
-      : res.status(400).json("There are no pets with that id in the db");
+  //   mascotaById
+  //     ? res.json(mascotaById)
+  //     : res.status(400).json("There are no pets with that id in the db");
 
-    //=============================================
-  } catch (error) {
-    res.status(400).send({ message: error.message });
-  }
+  //   //=============================================
+  // } catch (error) {
+  //   res.status(400).send({ message: error.message });
+  // }
+  res.send("hi")
 };
 
 const deleteMascota = async (req, res) => {
@@ -142,3 +131,42 @@ module.exports = {
   deleteMascota,
   updateMascota,
 };
+
+//CRUD API MASCOTAS
+/*
+id:{
+  type: DataTypes.UUID,
+  defaultValue: DataTypes.UUIDV4,
+  allowNull: false,
+  primaryKey: true
+},
+name:{
+  type: DataTypes.STRING,
+  allowNull: false,
+},
+height:{
+  type: DataTypes.INTEGER,
+  allowNull: false
+},
+weight:{
+  type: DataTypes.INTEGER,
+  allowNull: false
+},
+age:{
+  type: DataTypes.INTEGER,
+  allowNull: false
+},
+color:{
+  type: DataTypes.STRING,
+  allowNull: false
+},
+description:{
+  type: DataTypes.STRING,
+  allowNull: true
+},
+image:{
+  type: DataTypes.STRING,
+  allowNull: true
+},
+});
+};*/
