@@ -79,11 +79,11 @@ const getMascotas = async (req, res) => {
       const petName = Pet.find({ "name": name })
       res.json(petName);
     } else {
-      const pets = Pet.find();
+      var pets = Pet.find();
+      }
       pets
         ? res.json(pets)
-        : res.status(404).json({ message: "Pet not Found 😕" });
-    }
+        : res.status(404).send({message:error.message})
     
 
     /*     if (!name) {
