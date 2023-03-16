@@ -2,26 +2,64 @@ const { parse } = require("path");
 const Pet = require("../models/Pet");
 
 //CRUD API MASCOTAS
+/*
+id:{
+  type: DataTypes.UUID,
+  defaultValue: DataTypes.UUIDV4,
+  allowNull: false,
+  primaryKey: true
+},
+name:{
+  type: DataTypes.STRING,
+  allowNull: false,
+},
+height:{
+  type: DataTypes.INTEGER,
+  allowNull: false
+},
+weight:{
+  type: DataTypes.INTEGER,
+  allowNull: false
+},
+age:{
+  type: DataTypes.INTEGER,
+  allowNull: false
+},
+color:{
+  type: DataTypes.STRING,
+  allowNull: false
+},
+description:{
+  type: DataTypes.STRING,
+  allowNull: true
+},
+image:{
+  type: DataTypes.STRING,
+  allowNull: true
+},
+});
+};*/
 
 const createMascota = async (req, res) => {
   try {
-    let { name, color, peso, age, description } = req.body;
+    let { name, height, weight, age, color, description, image} = req.body;
 
-    /*  console.log(req.body); */
+    if (!name || !height || !weight || !age || !color) {
+      throw new Error("Faltan Datos");
+    }
 
-    /* 
-     otra opcion para eliminar
-    const mascotaDB = new Mascota(body)
-        await mascotaDB.save()
-        res.redirect('/mascotas')
-  */
+    if (!(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
+      throw new Error("El link provisto no es una imagen");
+  }
 
-    let newMascota = await Mascota.create({
+    let newMascota = await Pet.create({
       name,
+      height: parseInt(height) || 0,
+      weight: parseInt(weight) || 0, 
+      age: parseInt(age) || 0, 
       color,
-      peso: parseInt(peso),
-      age: parseInt(age) || 0,
-      description,
+      description, 
+      image
     });
 
     newMascota
@@ -41,11 +79,11 @@ const getMascotas = async (req, res) => {
       const petName = Pet.find({ "name": name })
       res.json(petName);
     } else {
-      const pets = Pet.find();
+      var pets = Pet.find();
       }
       pets
         ? res.json(pets)
-        : res.status(404).json({ message: "Pet not Found 😕" });
+        : res.status(404).send({message:error.message})
     
 
     /*     if (!name) {
@@ -90,7 +128,7 @@ const deleteMascota = async (req, res) => {
     if (!id) {
       throw new Error("Undefined id 😬");
     } else {
-      const mascotaDB = await Mascota.findByIdAndDelete({ _id: id });
+      const mascotaDB = await Pet.findByIdAndDelete({ _id: id });
 
       if (!mascotaDB) {
         return res.json({
@@ -117,7 +155,7 @@ const updateMascota = async (req, res) => {
     if (!id) {
       throw new Error("Undefined id 😬");
     } else {
-      const mascotaDB = await Mascota.findByIdAndUpdate(id, body);
+      const mascotaDB = await Pet.findByIdAndUpdate(id, body);
       //console.log(mascotaDB);
       res.json({
         estado: true,

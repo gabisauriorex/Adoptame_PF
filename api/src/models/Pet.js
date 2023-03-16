@@ -13,6 +13,25 @@ module.exports = (sequelize) => {
     animal:{
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Name no puede estar vacio"
+        },
+        isalpha:{
+          arg: true,
+          msg: "El nombre solo puede contener letras"
+        },
+        len: {
+          arg: [3, 20],
+          msg: "El numero de caracteres puede ser entre 3 y 20 caracteres",
+          min: { 
+            msg: "No esta permitido un nombre de 2 o menos caracteres"
+          },
+          max: {
+            msg: "No está permitido un nombre de más de 20 caracteres"
+          }
+        }
+      }
     },
       breed:{
         type: DataTypes.STRING,
@@ -20,27 +39,76 @@ module.exports = (sequelize) => {
     },
     height:{
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isFloat:{
+          msg: "Solo está permitido numeros y una coma decimal"
+        }
+      }
     },
     weight:{
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isFloat:{
+          msg: "Solo está permitido numeros y una coma decimal"
+        }
+      }
     },
     age:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     color:{
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Name no puede estar vacio"
+        },
+        isalpha:{
+          arg: true,
+          msg: "El nombre solo puede contener letras"
+        },
+        len: {
+          arg: [3, 20],
+          msg: "El numero de caracteres puede ser entre 3 y 20 caracteres",
+          min: { 
+            msg: "No esta permitido un nombre de 2 o menos caracteres"
+          },
+          max: {
+            msg: "No está permitido un nombre de más de 20 caracteres"
+          }
+        }
+      }
     },
     description:{
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      validate: {
+        isAlpha:{
+          arg: true,
+          msg: "El nombre solo puede contener letras"
+        },
+        len: {
+          arg: [3, 20],
+          msg: "El numero de caracteres puede ser entre 3 y 20 caracteres",
+          min: { 
+            msg: "No esta permitido un nombre de 2 o menos caracteres"
+          },
+          max: {
+            msg: "No está permitido un nombre de más de 20 caracteres"
+          }
+        }
+      }
     },
     image:{
       type: DataTypes.STRING,
       allowNull: true
     },
+    isLost:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false,
+    }
   });
 };
