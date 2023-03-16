@@ -42,5 +42,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    isLost:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false,
+    }
   });
 };

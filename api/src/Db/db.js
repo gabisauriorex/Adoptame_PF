@@ -4,17 +4,7 @@ const database = require("./config");
 const path = require("path");
 const fs = require("fs");
 
-const url = "mongodb+srv://admin:4Uu2hniHQ0UnmpWd@cluster0.5visjvr.mongodb.net/test"
-//const URL = "mongodb+srv://<nombre usuario>:password@cluster0.bsvp1kl.mongodb.net/Adoptame?retryWrites=true&w=majority";
-// "mongodb+srv://arieltecnico:1NOcCreyIcc5UnvH@cluster0.bsvp1kl.mongodb.net/Adoptame";
 
-const cnn = async () => {
-  await mongoose.connect(url, {
-    keepAlive: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-}
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product

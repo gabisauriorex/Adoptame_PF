@@ -1,11 +1,11 @@
-const cnn = require("../src/Db/db");
+const conn = require("../src/Db/db");
 //DECLARAMOS PUERTO EN .ENV
 
 const generateServidor = async () => {
   try {
-    await cnn();
+    await conn();
 
-    console.log(`mongoDB conected in el port 27017`);
+    console.log(`corriendo server`);
   } catch (error) {
     console.error("❌ Unable to connect to the database:", error);
   }
