@@ -56,13 +56,8 @@ module.exports = (sequelize) => {
       }
     },
     age:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isFloat:{
-          msg: "Solo está permitido numeros y una coma decimal"
-        }
-      }
+      type: DataTypes.STRING,
+      allowNull: false
     },
     color:{
       type: DataTypes.STRING,
@@ -91,7 +86,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        isalpha:{
+        isAlpha:{
           arg: true,
           msg: "El nombre solo puede contener letras"
         },
@@ -111,5 +106,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    isLost:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false,
+    }
   });
 };
