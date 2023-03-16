@@ -1,10 +1,27 @@
 export const pests = [
   {
     id: "1",
-    raza: "",
-    altura: "",
-    peso: "",
+    name:"",
     imagen: "",
     descripcion: "",
+    raza: "",
+    tamanio: "",
+    vacunas:"",
+    edad:"",
+    sexo:"",
+    color:"",
+    especie:""
+
   },
+
+    /* 
+     vacunados
+     tamaño
+     color
+     raza 
+     sexo
+    orden A-Z Z-A
+    
+    
+    */
 ];

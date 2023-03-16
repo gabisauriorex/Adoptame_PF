@@ -24,9 +24,8 @@ function AllRoutes() {
          <Route exact path="/About" element={<About/>} />
         </Routes>
        </BrowserRouter>   
-
-        {/* <Loading/>  */}
-      {/* <Footer/>  */}
+ 
+    {/*   <Footer/>   */}
      </div>
   );
 }
