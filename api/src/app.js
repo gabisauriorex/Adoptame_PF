@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 var path = require("path");
 const cookieParser = require("cookie-parser");
+const {body, validationResult} = require("express-validator");
 
 require("./db.js");
 

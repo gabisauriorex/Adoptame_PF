@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+require('express-validator');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -17,34 +18,40 @@ module.exports = (sequelize) => {
         notNull: {
           msg: "Name no puede estar vacio"
         },
-        // isAlpha:{
-        //   arg: true,
-        //   msg: "El nombre solo puede contener letras"
-        // },
-        // // len: {
-        //   arg: [3,20],
-        //   msg: "El numero de caracteres puede ser entre 3 y 20 caracteres",
-        //   min: { 
-        //     arg: 3,
-        //     msg: "No esta permitido un nombre de 2 o menos caracteres"
-        //   },
-        //   max: {
-        //     arg: 20,
-        //     msg: "No está permitido un nombre de más de 20 caracteres"
-        //   }
-        // }
+        isAlpha:{
+          args: true,
+          msg: "El tipo de animal solo puede contener letras"
+        },
+        len: {
+          arg: [3,20],
+          msg: "El numero de caracteres del tipo de animal puede ser entre 3 y 20 caracteres",
+        }
       }
     },
     breed:{
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: {
+            msg: "La raza no puede estar vacia"
+          },
+          isAlpha:{
+            args: true,
+            msg: "La raza solo puede contener letras"
+          },
+          len: {
+            arg: [3,20],
+            msg: "El numero de caracteres de la raza puede ser entre 3 y 20 caracteres",
+          }
+        }
     },
     height:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
         isFloat:{
-          msg: "Solo está permitido numeros y una coma decimal"
+          args: true,
+          msg: "La altura solo puede contener numeros y una coma decimal"
         }
       }
     },
@@ -53,7 +60,8 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         isFloat:{
-          msg: "Solo está permitido numeros y una coma decimal"
+          args: true,
+          msg: "El peso debe ser un numero"
         }
       }
     },
@@ -66,15 +74,16 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Name no puede estar vacio"
+          msg: "color no puede estar vacio"
         },
-        // isAlpha:{
-        //   arg: true,
-        //   msg: "El nombre solo puede contener letras"
-        // },
-        // len: {
-        //   arg: [3,20],
-        //   msg: "El numero de caracteres puede ser entre 3 y 20 caracteres",
+        isAlpha:{
+          args: true,
+          msg: "El color solo puede contener letras"
+        },
+        len: {
+          args: [3, 20],
+          msg: "El numero de caracteres del color puede ser entre 3 y 20 caracteres",
+        }
         //   min: { 
         //     arg: 3,
         //     msg: "No esta permitido un nombre de 2 o menos caracteres"
@@ -89,24 +98,6 @@ module.exports = (sequelize) => {
     description:{
       type: DataTypes.STRING,
       allowNull: true,
-      validate: {
-        // isAlpha:{
-        //   arg: true,
-        //   msg: "El nombre solo puede contener letras"
-        // },
-        // len: {
-        //   arg: [3,20],
-        //   msg: "El numero de caracteres puede ser entre 3 y 20 caracteres",
-        //   min: { 
-        //     arg: 3,
-        //     msg: "No esta permitido un nombre de 2 o menos caracteres"
-        //   },
-        //   max: {
-        //     arg: 20,
-        //     msg: "No está permitido un nombre de más de 20 caracteres"
-        //   }
-        // }
-      }
     },
     image:{
       type: DataTypes.STRING,
