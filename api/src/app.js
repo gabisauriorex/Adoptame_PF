@@ -1,20 +1,17 @@
 const express = require("express");
-let cors = require("cors");
-const dotenv = require("dotenv");
-dotenv.config();
+const cors = require("cors");
+const bodyParser = require("body-parser");
 const morgan = require("morgan");
 var path = require("path");
 const cookieParser = require("cookie-parser");
 
-require("../src/Db/associations");
+require("./db.js");
 
 const app = express();
 /* app.use(cors()); */
 app.use(cors());
-
-app.use(cookieParser());
-app.use(morgan("dev"));
-
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); //ya usa bodyparser por adentro
 app.use(express.static(path.join(__dirname, "public")));
@@ -26,6 +23,8 @@ app.name = "API";
 
 // "http://localhost:3000" "https://arielzarate.github.io"
 
+app.use(cookieParser());
+app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Credentials", "true");
