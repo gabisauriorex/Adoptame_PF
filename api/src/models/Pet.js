@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true
     },
-    name:{
+    animal:{
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -32,6 +32,10 @@ module.exports = (sequelize) => {
           }
         }
       }
+    },
+      breed:{
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     height:{
       type: DataTypes.INTEGER,
