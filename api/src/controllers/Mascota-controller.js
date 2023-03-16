@@ -44,14 +44,13 @@ const createMascota = async (req, res) => {
   try {
     let { name, height, weight, age, color, description, image} = req.body;
 
-    /*  console.log(req.body); */
+    if (!name || !height || !weight || !age || !color) {
+      throw new Error("Faltan Datos");
+    }
 
-    /* 
-     otra opcion para eliminar
-    const mascotaDB = new Mascota(body)
-        await mascotaDB.save()
-        res.redirect('/mascotas')
-  */
+    if (!(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
+      throw new Error("El link provisto no es una imagen");
+  }
 
     let newMascota = await Pet.create({
       name,
