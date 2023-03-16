@@ -10,9 +10,12 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true
     },
-    name:{
+    animal:{
       type: DataTypes.STRING,
       allowNull: false,
+      breed:{
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     height:{
       type: DataTypes.INTEGER,
