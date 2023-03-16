@@ -1,3 +1,14 @@
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import rootReducer from "../Reducer/rootReducer";
+
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+
+/* 
 import {
   legacy_createStore as createStore,
   applyMiddleware,
@@ -14,20 +25,6 @@ const rootReducer = rootReducerVideogames;
 const middleware = composeEnhancers(applyMiddleware(thunk));
 
 export default createStore(rootReducer, middleware);
-
-/* 
-
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from "../reducer";
-import thunk from "redux-thunk";
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
-
-
 
 
 */
