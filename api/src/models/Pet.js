@@ -13,6 +13,7 @@ module.exports = (sequelize) => {
     animal:{
       type: DataTypes.STRING,
       allowNull: false,
+    },
       breed:{
         type: DataTypes.STRING,
         allowNull: false,
