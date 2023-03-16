@@ -1,65 +1,33 @@
 const { parse } = require("path");
-const Pet = require("../models/Pet");
+const {Pet} = require("../db.js");
 
 //CRUD API MASCOTAS
-/*
-id:{
-  type: DataTypes.UUID,
-  defaultValue: DataTypes.UUIDV4,
-  allowNull: false,
-  primaryKey: true
-},
-name:{
-  type: DataTypes.STRING,
-  allowNull: false,
-},
-height:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-weight:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-age:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-color:{
-  type: DataTypes.STRING,
-  allowNull: false
-},
-description:{
-  type: DataTypes.STRING,
-  allowNull: true
-},
-image:{
-  type: DataTypes.STRING,
-  allowNull: true
-},
-});
-};*/
 
 const createMascota = async (req, res) => {
   try {
-    let { name, height, weight, age, color, description, image} = req.body;
+    let { id, animal, breed, height, weight, age, color, description, image, isLost} = req.body;
 
-    if (!name || !height || !weight || !age || !color) {
+    console.log(id, animal, breed, height, weight, age, color, description, image, isLost)
+    if (!animal || !breed || !height || !weight || !age || !color || !isLost) {
       throw new Error("Faltan Datos");
     }
 
-    if (!(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
+    if (image && !(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
       throw new Error("El link provisto no es una imagen");
-  }
+    } 
+    
+    if (!image) image = " ";
 
-    let newMascota = await Pet.create({
-      name,
+    let newMascota = await Pet.create ({
+      animal,
+      breed,
       height: parseInt(height) || 0,
       weight: parseInt(weight) || 0, 
       age: parseInt(age) || 0, 
       color,
       description, 
-      image
+      image,
+      isLost
     });
 
     newMascota
