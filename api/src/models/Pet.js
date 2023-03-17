@@ -19,14 +19,6 @@ module.exports = (sequelize) => {
         notNull: {
           msg: "El nombre no puede estar vacio"
         },
-        isAlpha:{
-          args: true,
-          msg: "El nombre solo puede contener letras"
-        },
-        len: {
-          arg: [3,20],
-          msg: "El numero de caracteres del tipo de animal debe tener entre 3 y 20 caracteres",
-        }
       }
     },
     animal:{
@@ -117,7 +109,7 @@ module.exports = (sequelize) => {
       defaultValue:false,
     },
     timewait:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.DATEONLY,
     },
     adopted:{
       type:DataTypes.BOOLEAN,

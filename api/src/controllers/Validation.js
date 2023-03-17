@@ -2,7 +2,7 @@ const {Pet} = require("../db");
 
 const Validation = async (body) => {
 
-        let {name, animal, breed, height, weight, age, color, image, isLost} = body;
+        let {name, animal, breed, height, weight, age, color, image, identified} = body;
     
         if (!name) return "Coloque un nombre";
         if (!animal) return "Coloque un tipo de animal"; 
@@ -11,8 +11,7 @@ const Validation = async (body) => {
         if (!weight) return "Coloque el peso de la mascota";
         if (!age) return "Coloque la edad de la mascota";
         if (!color) return "Coloque el color de pelo de la mascota";
-        if (!isLost) return "Coloque true si está perdido o false si no lo está";
-
+        
         if (image && !(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
             return "El link provisto no es una imagen";
         } 
@@ -26,6 +25,7 @@ const Validation = async (body) => {
         }
     
         if (!image) image = " ";
+
  }
 
 module.exports = Validation;
