@@ -24,8 +24,7 @@ Pet.belongsToMany(Diseases, {through:"pet_diseases"})
 Diseases.belongsToMany(Pet, {through:"pet_diseases"})
 Pet.belongsToMany(Vaccines, {through: "pet_vaccines"})
 Vaccines.belongsToMany(Pet, {through: "pet_vaccines"})
-//Dog.belongsToMany(Temperament, { through:"dog_temperament" } );
-//Temperament.belongsToMany(Dog, { through:"dog_temperament" } );
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

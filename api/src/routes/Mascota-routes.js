@@ -8,11 +8,9 @@ const {
   updateMascota,
 } = require("../controllers/Mascota-controller");
 
-//const middleware = require("../middlewares/videogame-middleware");
 
-router.get("/:id", mascotaById); //trae por id
-router.get("/:name", getMascotas); //trae por query o sea el name
 router.get("/", getMascotas); //trae todas las mascotas
+router.get("/:id", mascotaById); //trae por id
 router.post("/", createMascota); //crea una mascota
 
 //agregados
