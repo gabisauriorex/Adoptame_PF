@@ -1,24 +1,15 @@
 const { parse } = require("path");
-//const Pet = require("../models/Pet");
-const { Pet } = require("../db")
 const {Pet} = require("../db.js");
+const Validation = require("./Validation");
 
 //CRUD API MASCOTAS
 
 const createMascota = async (req, res) => {
   try {
-    let { id, name, animal, breed, height, weight, age, color, description, image, isLost} = req.body;
+    let {name, animal, breed, height, weight, age, color, description, image, isLost} = req.body;
 
-    console.log(id, name,  animal, breed, height, weight, age, color, description, image, isLost)
-    if (!name, !animal || !breed || !height || !weight || !age || !color || !isLost) {
-      throw new Error("Faltan Datos");
-    }
-
-    if (image && !(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
-      throw new Error("El link provisto no es una imagen");
-    } 
-    
-    if (!image) image = " ";
+    const msg = await Validation(req.body);
+    if (msg) throw new Error(msg);
 
     const newMascota = await Pet.create({
       name,
