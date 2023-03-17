@@ -6,10 +6,10 @@ const { Pet } = require("../db")
 
 const createMascota = async (req, res) => {
   try {
-    let { id, animal, breed, height, weight, age, color, description, image, isLost} = req.body;
+    let { id, name, animal, breed, height, weight, age, color, description, image, isLost} = req.body;
 
-    console.log(id, animal, breed, height, weight, age, color, description, image, isLost)
-    if (!animal || !breed || !height || !weight || !age || !color || !isLost) {
+    console.log(id, name,  animal, breed, height, weight, age, color, description, image, isLost)
+    if (!name, !animal || !breed || !height || !weight || !age || !color || !isLost) {
       throw new Error("Faltan Datos");
     }
 
@@ -20,7 +20,7 @@ const createMascota = async (req, res) => {
     if (!image) image = " ";
 
     const newMascota = await Pet.create({
-
+      name,
       animal,
       breed,
       height: parseInt(height) || 0,
@@ -47,13 +47,12 @@ const getMascotas = async (req, res) => {
     const pets = await Pet.findAll();
 
     if (name) {
-      const petName = Pet.filter( e => e.name.toLowerCase().inclides(name.toLowerCase()));
-      res.json(petName);
+      const petName = pets.filter( (p) => p.name.toLowerCase().includes(name.toLowerCase()));
+      petName.length ? res.status(200).send(petName): res.status(404).send({message:error.message})
+    }else{
+      res.status(200).send(pets)
     }
-    pets
-        ? res.json(pets)
-        : res.status(404).send({message:error.message})
-    
+  
   } catch (error) {
     res.status(400).send({ message: error });
   }

@@ -11,6 +11,11 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true
     },
+    name:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     animal:{
       type: DataTypes.STRING,
       allowNull: false,
