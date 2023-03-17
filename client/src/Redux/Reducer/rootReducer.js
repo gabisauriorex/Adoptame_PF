@@ -1,5 +1,7 @@
 import { GET_PETS } from "../ActionsTypes/actions_types";
 
+
+
 const initialState = {
   pets: [],
 };
@@ -11,8 +13,8 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         pets: action.payload,
-      };
 
+      };
     default:
       return state;
   }
