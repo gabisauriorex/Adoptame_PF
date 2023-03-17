@@ -15,13 +15,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        notNull: {
+          msg: "El nombre no puede estar vacio"
+        },
+      }
     },
     animal:{
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Name no puede estar vacio"
+          msg: "El tipo de animal no puede estar vacio"
         },
         isAlpha:{
           args: true,
@@ -29,7 +34,7 @@ module.exports = (sequelize) => {
         },
         len: {
           arg: [3,20],
-          msg: "El numero de caracteres del tipo de animal puede ser entre 3 y 20 caracteres",
+          msg: "El numero de caracteres del tipo de animal debe tener entre 3 y 20 caracteres",
         }
       }
     },
@@ -46,7 +51,7 @@ module.exports = (sequelize) => {
           },
           len: {
             arg: [3,20],
-            msg: "El numero de caracteres de la raza puede ser entre 3 y 20 caracteres",
+            msg: "El numero de caracteres de la raza debe tener entre 3 y 20 caracteres",
           }
         }
     },
@@ -87,18 +92,9 @@ module.exports = (sequelize) => {
         },
         len: {
           args: [3, 20],
-          msg: "El numero de caracteres del color puede ser entre 3 y 20 caracteres",
+          msg: "El numero de caracteres del color debe tener entre 3 y 20 caracteres",
         }
-        //   min: { 
-        //     arg: 3,
-        //     msg: "No esta permitido un nombre de 2 o menos caracteres"
-        //   },
-        //   max: {
-        //     arg: 20,
-        //     msg: "No está permitido un nombre de más de 20 caracteres"
-        //   }
-        // }
-      }
+       }
     },
     description:{
       type: DataTypes.STRING,
@@ -108,9 +104,16 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    isLost:{
+    identified:{
       type:DataTypes.BOOLEAN,
       defaultValue:false,
+    },
+    timewait:{
+      type: DataTypes.DATEONLY,
+    },
+    adopted:{
+      type:DataTypes.BOOLEAN,
+      defaultValue: false,
     }
   }, {
       timestamps: false,

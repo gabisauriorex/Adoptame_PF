@@ -2,10 +2,12 @@ import axios from "axios";
 
 //conexion entre front y back
 
-import {GET_PETS} from '../ActionsTypes/actions_types'
+import {GET_PETS,GET_DETAIL_PETS} from '../ActionsTypes/actions_types'
 
 //estos datos vienen del array harckodeado
-import {pets} from '../../Datos.js'
+import {pets} from '../../Datos.js';
+
+
 
 /*como no tenemos datos del back por el momento traeremos
  datos de un array cargado de nosotros 😁😁😁*/
@@ -21,6 +23,28 @@ export const getPets = () => {
    }
   };
 };
+
+export function getDetails(id) {
+  //console.log(id)
+
+
+  if (id) {
+    return async function (dispatch) {
+      try {
+       // const response = await axios.get(`Pet/${id}`);
+      dispatch({
+          type: GET_DETAIL_PETS,
+          payload:pets
+        });  
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }
+  /*  return {
+    type: "RESET",
+  }; */
+}
 
 
 

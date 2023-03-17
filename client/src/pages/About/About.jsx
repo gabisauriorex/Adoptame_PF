@@ -1,8 +1,8 @@
 import React from 'react'
-
+import style from './About.module.css'
 function About() {
   return (
-    <div>
+    <div className={style.color}>
       <h2>ACerca de nosotrxs</h2>
     </div>
   )

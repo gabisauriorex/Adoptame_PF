@@ -1,37 +1,42 @@
 const { parse } = require("path");
-//const Pet = require("../models/Pet");
-const { Pet } = require("../db")
+const {Pet} = require("../db.js");
+const Validation = require("./Validation");
+const sumarDias = require("./sumarDias");
 
 //CRUD API MASCOTAS
 
 const createMascota = async (req, res) => {
   try {
-    let { id, name, animal, breed, height, weight, age, color, description, image, isLost} = req.body;
+    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, arrayvacine} = req.body;
 
-    //console.log(id, name,  animal, breed, height, weight, age, color, description, image, isLost)
-    if (!name, !animal || !breed || !height || !weight || !age || !color || !isLost) {
-      throw new Error("Faltan Datos");
+    const msg = await Validation(req.body);
+    if (msg) throw new Error(msg);
+            
+    if (identified){ 
+      var d = new Date();
+      timewait = sumarDias(d, 30);
+      adopted = false;
+    } else {
+        timewait = new Date();
+        adopted = true;
     }
 
-    if (image && !(image.match( /^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null )) {
-      throw new Error("El link provisto no es una imagen");
-    } 
-    
-    if (!image) image = " ";
-
+// : parseInt(height) || 0,: parseInt(weight) || 0,
     const newMascota = await Pet.create({
       name,
       animal,
       breed,
-      height: parseInt(height) || 0,
-      weight: parseInt(weight) || 0, 
+      height,
+      weight,
       age, 
       color,
       description, 
       image,
-      isLost
+      identified,
+      timewait,
+      adopted,
     });
-
+    // await newMascota.addVaccines(arrayvacine);
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -118,7 +123,7 @@ const updateMascota = async (req, res) => {
       //       mascotaById.prop = aux;
       //   }
 
-      //mascotaById.save()
+      mascotaById.save()
       console.log(mascotaById)
       res.json("El cambio fue realizado con exito")
     }
@@ -135,41 +140,3 @@ module.exports = {
   updateMascota,
 };
 
-//CRUD API MASCOTAS
-/*
-id:{
-  type: DataTypes.UUID,
-  defaultValue: DataTypes.UUIDV4,
-  allowNull: false,
-  primaryKey: true
-},
-name:{
-  type: DataTypes.STRING,
-  allowNull: false,
-},
-height:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-weight:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-age:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-color:{
-  type: DataTypes.STRING,
-  allowNull: false
-},
-description:{
-  type: DataTypes.STRING,
-  allowNull: true
-},
-image:{
-  type: DataTypes.STRING,
-  allowNull: true
-},
-});
-};*/
