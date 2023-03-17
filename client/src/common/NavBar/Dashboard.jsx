@@ -20,6 +20,9 @@ import SearchBar from './SearchBar';
 import {Link} from 'react-router-dom'
 
 
+ 
+
+
 const drawerWidth = 200;
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -62,7 +65,7 @@ export default function Dashboard() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-<AppBar position="fixed" sx={{backgroundColor:'yellowgreen' ,color:"Black"}} open={open} >
+    <AppBar position="fixed" sx={{backgroundColor:'#f06292' ,color:"Black"}} open={open} >
         <Toolbar>
           <IconButton
             size="large"
