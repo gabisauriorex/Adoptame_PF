@@ -112,9 +112,16 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    isLost:{
+    identified:{
       type:DataTypes.BOOLEAN,
       defaultValue:false,
+    },
+    timewait:{
+      type: DataTypes.INTEGER,
+    },
+    adopted:{
+      type:DataTypes.BOOLEAN,
+      defaultValue: false,
     }
   }, {
       timestamps: false,
