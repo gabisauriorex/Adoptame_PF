@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Name no puede estar vacio"
+          msg: "El tipo de animal no puede estar vacio"
         },
         isAlpha:{
           args: true,

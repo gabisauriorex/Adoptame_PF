@@ -1,6 +1,5 @@
 const { parse } = require("path");
-//const Pet = require("../models/Pet");
-const { Pet } = require("../db")
+
 const {Pet} = require("../db.js");
 
 //CRUD API MASCOTAS
