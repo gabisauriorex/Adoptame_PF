@@ -85,7 +85,7 @@ const deleteMascota = async (req, res) => {
     const mascotaById = await Pet.findByPk(id);
 
     if (mascotaById){
-      mascotaById.isLost = false;
+      mascotaById.identified = false;
       //console.log(mascotaById)
       await mascotaById.save();
       res.json("La mascota fue adoptada con exito");
@@ -100,7 +100,7 @@ const deleteMascota = async (req, res) => {
 
 const updateMascota = async (req, res) => {
   const { id } = req.params;
-  const { name, animal, breed, height, weight, age, color, description, image, isLost } = req.body;
+  const { name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted } = req.body;
 
   try {
     if (!id) {
@@ -116,8 +116,9 @@ const updateMascota = async (req, res) => {
       if (color) mascotaById.color = color;
       if (description) mascotaById.description = description;
       if (image) mascotaById.image = image;
-      if (isLost) mascotaById.isLost = isLost;
-      
+      if (identified) mascotaById.identified = identified;
+      if (timewait) mascotaById.timewait = timewait;
+      if (adopted) mascotaById.adopted = adopted;
       // for (let prop in body) {
       //       var aux = body[prop];
       //       mascotaById.prop = aux;
