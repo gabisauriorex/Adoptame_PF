@@ -1,5 +1,6 @@
 const { parse } = require("path");
-const {Pet, Vaccines, Diseases, Location} = require("../db.js");
+const {Pet, Vaccines, Diseases} = require("../db.js");
+const {Location} = require("../db.js")
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
 
@@ -7,7 +8,7 @@ const sumarDias = require("./sumarDias");
 
 const createMascota = async (req, res) => {
   try {
-    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, vaccine, disease, location} = req.body;
+    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, vaccine, disease} = req.body;
 
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
@@ -38,7 +39,7 @@ const createMascota = async (req, res) => {
     });
     await newMascota.addVaccines(vaccine);
     await newMascota.addDiseases(disease);
-    await newMascota.addLocation(location);
+
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -55,25 +56,20 @@ const getMascotas = async (req, res) => {
       {
         model: Vaccines,
         attributes: ["name"],
-        througth: {
-          attributes: [],
-        },
+        through: { attributes: [] }
       },
       {
         model: Diseases,
-        attributes: ["name"],
-        througth: {
-          attributes: [],
-        }
+        attributes: ["name", "severity"],
+        through: { attributes: [] }
       }, 
       {
         model: Location,
         attributes: ["province"],
-        througth: {
-          attributes: [],
-        },
-      }],
+      },
+    ]
     });
+    
 
     if (name) {
       const petName = pets.filter( (p) => p.name.toLowerCase().includes(name.toLowerCase()));
