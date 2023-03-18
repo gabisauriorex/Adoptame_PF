@@ -1,5 +1,5 @@
 const { parse } = require("path");
-const {Pet} = require("../db.js");
+const {Pet, Vaccines} = require("../db.js");
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
 
@@ -36,7 +36,7 @@ const createMascota = async (req, res) => {
       timewait,
       adopted,
     });
-    // await newMascota.addVaccines(arrayvacine);
+    await newMascota.addVaccines(arrayvacine);
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -48,7 +48,15 @@ const createMascota = async (req, res) => {
 const getMascotas = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
-    const pets = await Pet.findAll();
+    const pets = await Pet.findAll({
+      include: {
+        model: Vaccines,
+        attributes: ["name"],
+        througth: {
+          attributes: [],
+        },
+      },
+    });
 
     if (name) {
       const petName = pets.filter( (p) => p.name.toLowerCase().includes(name.toLowerCase()));
@@ -134,40 +142,3 @@ module.exports = {
 };
 
 //CRUD API MASCOTAS
-/*
-id:{
-  type: DataTypes.UUID,
-  defaultValue: DataTypes.UUIDV4,
-  allowNull: false,
-  primaryKey: true
-},
-name:{
-  type: DataTypes.STRING,
-  allowNull: false,
-},
-height:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-weight:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-age:{
-  type: DataTypes.INTEGER,
-  allowNull: false
-},
-color:{
-  type: DataTypes.STRING,
-  allowNull: false
-},
-description:{
-  type: DataTypes.STRING,
-  allowNull: true
-},
-image:{
-  type: DataTypes.STRING,
-  allowNull: true
-},
-});
-};*/
