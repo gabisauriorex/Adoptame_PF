@@ -7,18 +7,18 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
-import {GroupAdd,Lock,Favorite,Home,Pets} from '@mui/icons-material';
+import {GroupAdd,Lock,Favorite,Home,Pets,Diversity1} from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import {ListItemButton,ListItemIcon,ListItemText,Divider,IconButton,Button} from '@mui/material';
-
-
+import Adopta from '../../components/Adopta/Adopta';
+import huesito from '../../Images/huesito.png'
 //=======================
 import SearchBar from './SearchBar';
-import {Link} from 'react-router-dom'
 
+import {Link} from "react-router-dom";
 
  
 
@@ -51,7 +51,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function Dashboard() {
-  const theme = useTheme();
+  const theme = useTheme(); 
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -61,6 +61,47 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
+const arrayNav=[
+{
+  name:  'Adopta',
+   path: '/Adopta',
+   icon: <Diversity1/>
+}
+  ,
+{
+  name:  'Dona',
+   path: '/Dona',
+   icon: <Favorite/>
+}
+  ,
+{
+  name:  'Registra Mascota',
+   path: '/CreatePet',
+   icon: <Pets/>
+}
+  ,
+{
+  name:  'Sobre Nosotros',
+   path: '/About', 
+   icon: <Home/>
+}
+
+]
+
+const arrayNav2=[
+
+{ name:'Registro',
+  path:'/Register',
+  icon:  <GroupAdd/>
+}
+,
+{ name:'login',
+  path:'/Login',
+  icon:  <Lock/>
+}
+]
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -73,8 +114,7 @@ export default function Dashboard() {
             color="inherit"
             aria-label="menu"
             onClick={handleDrawerOpen}
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-             
+            sx={{ mr: 1, ...(open && { display: 'none' }) }}
           >
           <MenuIcon/>
           </IconButton>
@@ -86,30 +126,22 @@ export default function Dashboard() {
             className={theme.typography}
           >
             Adoptame  
-            <IconButton aria-label="icono"  color='inherit'>
+            <IconButton aria-label="icono"  color='inherit' component={Link} to="/Home" >
              <Pets/>
           </IconButton>  
           </Typography>
 
-
-         <Box sx={{flexGrow:1 }}>
-         <SearchBar/> 
+          <Box sx={{flexGrow:1 }}>
+           <SearchBar/>   
          </Box>
-
-          
-          <Box sx={{display:"flex" ,flexDirection:"row"  }}>
-            
-      {/*     <Button color="inherit" sx={{flexGrow:0}}>Adopta</Button>
-          
-          <Button color="inherit" sx={{flexGrow:0}}>Sobre Nosotros</Button> */}
-          <Button color="inherit" sx={{flexGrow:0, fontFamily:['sans-serif','Arial']}}>Dona</Button>
-          <Button color="inherit" sx={{flexGrow:0}}>Login</Button>
-          <Button color="inherit" sx={{flexGrow:0}}>Registrarse</Button>
-          </Box> 
+         <Box sx={{display:"flex" ,flexDirection:"row"  }}>
+         {/*  <Button color="inherit" sx={{flexGrow:0}}>Sobre Nosotros</Button>
+          <Button color="inherit" sx={{flexGrow:0, fontFamily:['sans-serif','Arial']}}>Dona</Button> */}
+        <Button color="inherit" sx={{flexGrow:0}}component={Link} to="/Login" >Login/Register</Button> 
+        </Box> 
         
         </Toolbar>
       </AppBar>
-
       <Drawer
         sx={{
           width: drawerWidth,
@@ -126,40 +158,38 @@ export default function Dashboard() {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+        <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-          {['Adopta', 'Dona', 'Sobre Nosotros'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
+       <List> 
+
+        {arrayNav.map((item, index) => (
+            <ListItem key={item.name}   >
+              <ListItemButton  component={Link} to={item.path}>  
+                 <ListItemIcon  >
+                  {/* {item.name==="Adopta"?<Pets/> : item.name==="Dona"?<Favorite />:<Home/>} */}
+                   {item.icon}
+                </ListItemIcon> 
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+         <Divider/>
+          {arrayNav2.map((item2,index) => (
+            <ListItem key={item2.name} disablePadding>
+              <ListItemButton component={Link} to={item2.path}>
                 <ListItemIcon>
-                  {text==="Adopta"?<Pets /> : text==="Dona"?<Favorite />:<Home/>}
+               {/*   {index % 2 === 0 ? <GroupAdd/> : <Lock />}  */}
+               {item2.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={item2.name} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-        <Divider />
-        <List>
-          {[ 'Registro', 'Login'].map((text,index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                 {index % 2 === 0 ? <GroupAdd/> : <Lock />} 
-
-
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      
+      </Drawer> 
     </Box>
   );
 }
