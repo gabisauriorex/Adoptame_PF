@@ -24,6 +24,8 @@ Pet.belongsToMany(Diseases, {through:"pet_diseases"})
 Diseases.belongsToMany(Pet, {through:"pet_diseases"})
 Pet.belongsToMany(Vaccines, {through: "pet_vaccines"})
 Vaccines.belongsToMany(Pet, {through: "pet_vaccines"})
+Pet.belongsToMany(Location, {through: "pet_location"});
+Location.belongsToMany(Pet, {through: "pet_location"});
 
 
 module.exports = {
