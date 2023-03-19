@@ -1,3 +1,20 @@
+
+import React from 'react'
+
+export default function Register() {
+  return (
+    <div>
+       <h2>Register</h2>
+    </div>
+  )
+}
+
+
+
+
+
+/*
+
 import FormRegister from "./FormRegister/FormRegister";
 //import Nav from "./Nav/Nav";
 //import WavesLogin from "../Waves/WavesLogin/WavesLogin";
@@ -145,3 +162,7 @@ const Login = () => {
   );
 };
 export default Login;
+
+
+
+*/

@@ -4,6 +4,7 @@ import { POST_PET } from "../ActionsTypes/actions_types";
 
 const initialState = {
   pets: [],
+  detail:[]
 };
 
 export default function rootReducer(state = initialState, action) {
