@@ -1,5 +1,6 @@
 const { parse } = require("path");
-const {Pet} = require("../db.js");
+const {Pet, Vaccines, Diseases} = require("../db.js");
+const {Location} = require("../db.js")
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
 
@@ -7,7 +8,7 @@ const sumarDias = require("./sumarDias");
 
 const createMascota = async (req, res) => {
   try {
-    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, arrayvacine} = req.body;
+    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, vaccine, disease} = req.body;
 
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
@@ -21,7 +22,6 @@ const createMascota = async (req, res) => {
         adopted = true;
     }
 
-// : parseInt(height) || 0,: parseInt(weight) || 0,
     const newMascota = await Pet.create({
       name,
       animal,
@@ -35,8 +35,11 @@ const createMascota = async (req, res) => {
       identified,
       timewait,
       adopted,
+      LocationId: Location.id
     });
-    // await newMascota.addVaccines(arrayvacine);
+    await newMascota.addVaccines(vaccine);
+    await newMascota.addDiseases(disease);
+
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -48,7 +51,25 @@ const createMascota = async (req, res) => {
 const getMascotas = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
-    const pets = await Pet.findAll();
+    const pets = await Pet.findAll({
+    include: [
+      {
+        model: Vaccines,
+        attributes: ["name"],
+        through: { attributes: [] }
+      },
+      {
+        model: Diseases,
+        attributes: ["name", "severity"],
+        through: { attributes: [] }
+      }, 
+      {
+        model: Location,
+        attributes: ["province"],
+      },
+    ]
+    });
+    
 
     if (name) {
       const petName = pets.filter( (p) => p.name.toLowerCase().includes(name.toLowerCase()));
@@ -140,4 +161,5 @@ module.exports = {
   deleteMascota,
   updateMascota,
 };
+
 
