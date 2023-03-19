@@ -22,7 +22,6 @@ const createMascota = async (req, res) => {
         adopted = true;
     }
 
-// : parseInt(height) || 0,: parseInt(weight) || 0,
     const newMascota = await Pet.create({
       name,
       animal,
@@ -36,6 +35,7 @@ const createMascota = async (req, res) => {
       identified,
       timewait,
       adopted,
+      LocationId: Location.id
     });
     await newMascota.addVaccines(vaccine);
     await newMascota.addDiseases(disease);

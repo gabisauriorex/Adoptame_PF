@@ -1,6 +1,6 @@
 const { parse } = require("path");
 
-const {Location} = require("../db.js");
+const {Location, Pet} = require("../db.js");
 
 //CRUD API MASCOTAS
 
@@ -8,7 +8,6 @@ const createLocation = async (req, res) => {
   try {
     let {province} = req.body;
 
-// : parseInt(height) || 0,: parseInt(weight) || 0,
 const location = await Location.findAll();
 if (province) {
     const locationName = location.filter( (l) => l.province.toLowerCase().includes(province.toLowerCase()));
