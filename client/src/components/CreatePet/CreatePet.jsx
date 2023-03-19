@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
-=======
-/* import { useNavigate } from "react-router-dom"; */
->>>>>>> e6000027bc7eb48df767424cf42dfa0fed0751bb
 
 
 function CreatePet(){
@@ -42,11 +38,7 @@ function CreatePet(){
             alert("Revise los campos...")
         }else{
             dispatch(postPet(input));
-<<<<<<< HEAD
             navigate('/');
-=======
-        navigate('/'); 
->>>>>>> e6000027bc7eb48df767424cf42dfa0fed0751bb
         }
     }
 
@@ -64,6 +56,8 @@ function CreatePet(){
                     ref={register("name", {required: true})
                 }
                 onChange={(e) => handleChange(e)}/>
+            </div>
+            <div>
                 {errors.name && <span>Nombre no puede estar vacio</span>}
             </div>
             <div>
