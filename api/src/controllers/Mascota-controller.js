@@ -156,7 +156,7 @@ const deleteMascota = async (req, res) => {
     const mascotaById = await Pet.findByPk(id);
 
     if (mascotaById) {
-      mascotaById.identified = false;
+      mascotaById.adopted = false;
       //console.log(mascotaById)
       await mascotaById.save();
       res.json("La mascota fue adoptada con exito");
