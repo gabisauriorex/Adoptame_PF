@@ -1,6 +1,6 @@
 const { parse } = require("path");
-
-const {Diseases} = require("../db.js");
+const { Op } = require("sequelize");
+const {Diseases,Pet} = require("../db.js");
 
 
 //CRUD API MASCOTAS
@@ -13,8 +13,8 @@ const createDiseases = async (req, res) => {
     const newDiseases = await Diseases.create({name, severity});
  
     newDiseases
-      ? res.status(200).send("Vaccine created successfully 👌")
-      : res.status(404).json("Vaccine not created ☹ ");
+      ? res.status(200).send("Disease created successfully 👌")
+      : res.status(404).json("Disease not created ☹ ");
   } catch (error) {
     return res.status(400).send({ message: error.message });
   }
@@ -23,13 +23,23 @@ const createDiseases = async (req, res) => {
 const getDiseases = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
-    const diasease = await Diseases.findAll();
+    const diseases = await Diseases.findAll( {include: [
+    
+      {
+        model: Pet,
+        attributes: ["id"],
+        through:{attributes:[]}
+      },
+    ]});
 
     if (name) {
-      const DiseasesName = diasease.filter( (d) => d.name.toLowerCase().includes(name.toLowerCase()));
-      DiseasesName.length ? res.status(200).send(DiseasesName): res.status(404).send({message:error.message})
+      let oneDisease = await Diseases.findAll({
+        where:{
+          name: {[Op.iLike]:`%${name}%`}
+        }})
+        res.status(200).send(oneDisease)
     }else{
-      res.status(200).send(diasease)
+      res.status(200).send(diseases)
     }
   
   } catch (error) {
