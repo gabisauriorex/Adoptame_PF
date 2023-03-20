@@ -4,7 +4,7 @@ const {precargaLocation} = require("./src/services/precargaLocation");
 const {precargaDiseases} = require("./src/services/precargaDiseases");
 const {precargaVaccines} = require("./src/services/precargaVaccines")
 
-conn.sync( {force: true }).then( () => {
+conn.sync( {force: false }).then( () => {
     precargaLocation();
     precargaDiseases();
     precargaVaccines();
