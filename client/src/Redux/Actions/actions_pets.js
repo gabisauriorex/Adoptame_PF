@@ -9,12 +9,15 @@ import {GET_PETS,POST_SUCCESS, GET_DETAIL_PETS,} from '../ActionsTypes/actions_t
 //estos datos vienen del array harckodeado
 /* import {pets} from '../../Datos.js'; */
 
-export const postPet = (payload)=>{
+
+/*como no tenemos datos del back por el momento traeremos
+ datos de un array cargado de nosotros 😁😁😁*/
+ export const postPet = (payload)=>{
   return async (dispatch) => {
 
     console.log(payload)
     try {
-      await axios.post('pets', payload);
+    await axios.post('pets', payload);
       dispatch({
         type: POST_SUCCESS,
         //payload: response.data,
@@ -45,6 +48,41 @@ export const getPets =() => {
    }
   };
 };
+
+export const filterByBreed = (payload) => {
+  return {
+    type: FILTER_BY_BREED, 
+    payload
+  }
+}
+
+export const filterByAnimal = (payload) => {
+  return {
+    type: FILTER_BY_ANIMAL, 
+    payload
+  }
+}
+
+export const filterBySize = (payload) => {
+  return {
+    type: FILTER_BY_SIZE, 
+    payload
+  }
+}
+
+export const filterByColor = (payload) => {
+  return {
+    type: FILTER_BY_COLOR, 
+    payload
+  }
+}
+
+export const filterByIdent = (payload) => {
+  return {
+    type: FILTER_BY_IDENT, 
+    payload
+  }
+}
 
 export function getDetails(id) {
  if (id) {
