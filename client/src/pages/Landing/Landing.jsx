@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom';
 
 import './Landing.css'
+
 function Landing() {
   return (
     <div>
@@ -11,6 +12,9 @@ function Landing() {
 
        <Link to="/Home">
        <Button variant="contained">ir a home </Button>
+       </Link>
+       <Link to="/createPet">
+      <Button variant="contained">Crear animal</Button>
        </Link>
 
     </div>
