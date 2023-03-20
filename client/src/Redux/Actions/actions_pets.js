@@ -2,7 +2,9 @@ import axios from "axios";
 
 //conexion entre front y back
 
-import {GET_PETS,GET_DETAIL_PETS} from '../ActionsTypes/actions_types'
+import {GET_PETS, POST_REQUEST, POST_FAILURE, POST_SUCCESS} from '../ActionsTypes/actions_types'
+
+
 
 //estos datos vienen del array harckodeado
 import {pets} from '../../Datos.js';
@@ -11,6 +13,35 @@ import {pets} from '../../Datos.js';
 
 /*como no tenemos datos del back por el momento traeremos
  datos de un array cargado de nosotros 😁😁😁*/
+ export const postPet = (payload)=>{
+  return async (dispatch) => {
+    dispatch({ type: POST_REQUEST });
+    console.log(payload)
+    try {
+      const response = await axios.post('http://localhost:3000/mascotas', payload);
+      dispatch({
+        type: POST_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: POST_FAILURE,
+        payload: error.message,
+      })
+    }  
+  }
+  }
+  //     try{
+  //         let json = await axios.post("http://localhost:3000/", payload);
+  //         return dispatch({
+  //             type: POST_PET,
+  //             payload: json
+  //         })
+  //     } catch(error){
+  //         console.log(error)
+  //         }
+  // }
+
 export const getPets = () => {
  return function (dispatch) {
    try {

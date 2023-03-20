@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 var path = require("path");
 const cookieParser = require("cookie-parser");
-const {body, validationResult} = require("express-validator");
+// const {body, validationResult} = require("express-validator");
 
 require("./db.js");
 
@@ -27,7 +27,7 @@ app.name = "API";
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",

@@ -3,12 +3,12 @@ const router = Router();
 
 const Pet = require("./Mascota-routes");
 const Vaccines = require("./Vaccines-routes");
-const Diaseases = require("./Diaseases-routes");
+const Diaseases = require("./Diseases-routes");
 const Location = require("./Location-routes");
 
-router.use("/Mascotas", Pet);
-router.use("/Vaccines", Vaccines);
-router.use("/Diaseases", Diaseases);
-router.use("/Location", Location);
+router.use("/pets", Pet);
+router.use("/vaccines", Vaccines);
+router.use("/diseases", Diaseases);
+router.use("/locations", Location);
 
 module.exports = router;

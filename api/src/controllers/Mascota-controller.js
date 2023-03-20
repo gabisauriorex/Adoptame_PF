@@ -1,6 +1,5 @@
-const { parse } = require("path");
-const {Pet, Vaccines, Diseases} = require("../db.js");
-const {Location} = require("../db.js")
+const { Pet, Vaccines, Diseases, Location } = require("../db.js");
+const { Op } = require("sequelize");
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
 
@@ -8,18 +7,34 @@ const sumarDias = require("./sumarDias");
 
 const createMascota = async (req, res) => {
   try {
-    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, vaccine, disease} = req.body;
+    let {
+      name,
+      animal,
+      breed,
+      height,
+      weight,
+      age,
+      color,
+      description,
+      image,
+      identified,
+      timewait,
+      adopted,
+      vaccine,
+      disease,
+      location,
+    } = req.body;
 
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
-            
-    if (identified){ 
+
+    if (identified) {
       var d = new Date();
       timewait = sumarDias(d, 30);
       adopted = false;
     } else {
-        timewait = new Date();
-        adopted = true;
+      timewait = new Date();
+      adopted = true;
     }
 
     const newMascota = await Pet.create({
@@ -28,18 +43,17 @@ const createMascota = async (req, res) => {
       breed,
       height,
       weight,
-      age, 
+      age,
       color,
-      description, 
+      description,
       image,
       identified,
       timewait,
       adopted,
-      LocationId: Location.id
     });
     await newMascota.addVaccines(vaccine);
     await newMascota.addDiseases(disease);
-
+    await newMascota.addLocation(location);
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -52,32 +66,52 @@ const getMascotas = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
     const pets = await Pet.findAll({
-    include: [
-      {
-        model: Vaccines,
-        attributes: ["name"],
-        through: { attributes: [] }
-      },
-      {
-        model: Diseases,
-        attributes: ["name", "severity"],
-        through: { attributes: [] }
-      }, 
-      {
-        model: Location,
-        attributes: ["province"],
-      },
-    ]
+      include: [
+        {
+          model: Vaccines,
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+        {
+          model: Diseases,
+          attributes: ["name", "severity"],
+          through: { attributes: [] },
+        },
+        {
+          model: Location,
+          attributes: ["id", "province"],
+          through: { attributes: [] },
+        },
+      ],
     });
-    
 
     if (name) {
-      const petName = pets.filter( (p) => p.name.toLowerCase().includes(name.toLowerCase()));
-      petName.length ? res.status(200).send(petName): res.status(404).send({message:error.message})
-    }else{
-      res.status(200).send(pets)
+      const queryPets = await Pet.findAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+        },
+        include: [
+          {
+            model: Vaccines,
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Diseases,
+            attributes: ["name", "severity"],
+            through: { attributes: [] },
+          },
+          {
+            model: Location,
+            attributes: ["id", "province"],
+            through: { attributes: [] },
+          },
+        ],
+      });
+      res.status(200).send(queryPets);
+    } else {
+      res.status(200).send(pets);
     }
-  
   } catch (error) {
     res.status(400).send({ message: error });
   }
@@ -87,25 +121,41 @@ const mascotaById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const mascotaById = await Pet.findByPk(id);
+    const mascotaById = await Pet.findByPk(id, {
+      include: [
+        {
+          model: Vaccines,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+        {
+          model: Diseases,
+          attributes: ["name", "severity"],
+          through: { attributes: [] },
+        },
+        {
+          model: Location,
+          attributes: ["province"],
+          through: { attributes: [] },
+        },
+      ],
+    });
 
     mascotaById
       ? res.json(mascotaById)
       : res.status(400).json("There are no pets with that id in the db");
-
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
 };
 
 const deleteMascota = async (req, res) => {
-  
   try {
     const { id } = req.params;
 
     const mascotaById = await Pet.findByPk(id);
 
-    if (mascotaById){
+    if (mascotaById) {
       mascotaById.identified = false;
       //console.log(mascotaById)
       await mascotaById.save();
@@ -113,7 +163,6 @@ const deleteMascota = async (req, res) => {
     } else {
       res.status(400).json("There are no pets with that id in the db");
     }
-
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
@@ -121,7 +170,20 @@ const deleteMascota = async (req, res) => {
 
 const updateMascota = async (req, res) => {
   const { id } = req.params;
-  const { name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted } = req.body;
+  const {
+    name,
+    animal,
+    breed,
+    height,
+    weight,
+    age,
+    color,
+    description,
+    image,
+    identified,
+    timewait,
+    adopted,
+  } = req.body;
 
   try {
     if (!id) {
@@ -145,9 +207,9 @@ const updateMascota = async (req, res) => {
       //       mascotaById.prop = aux;
       //   }
 
-      mascotaById.save()
-      console.log(mascotaById)
-      res.json("El cambio fue realizado con exito")
+      mascotaById.save();
+      console.log(mascotaById);
+      res.json("El cambio fue realizado con exito");
     }
   } catch (error) {
     return res.status(500).send({ error: error.message });
@@ -161,5 +223,3 @@ module.exports = {
   deleteMascota,
   updateMascota,
 };
-
-
