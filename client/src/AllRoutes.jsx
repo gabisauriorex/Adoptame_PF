@@ -10,13 +10,14 @@ import About from "./pages/About/About";
 import Footer from './components/Footer/Footer'
 import Loading from "./components/Loading/Loading";
 import CreatePet from "./components/CreatePet/CreatePet";
+
 function AllRoutes() {
   //const location = useLocation();
 
   return (
     <div>
-         <Dashboard/> 
-       <BrowserRouter>
+         {/* <Dashboard/>  */}
+
         <Routes>
           <Route exact path="/"  element={<Landing/>} /> 
           <Route exact path="/Adopta" element={<Adopta/>} />
@@ -24,9 +25,9 @@ function AllRoutes() {
           <Route exact path="/Home" element={<Home/>} />
           <Route exact path="/Dona" element={<Dona/>} />
          <Route exact path="/About" element={<About/>} />
-         <Route exact path="/createMascota" element={<CreatePet/>} />
+         <Route exact path="/CreatePet" element={<CreatePet/>} />
         </Routes>
-      </BrowserRouter>
+
  
     {/*   <Footer/>   */}
      </div>

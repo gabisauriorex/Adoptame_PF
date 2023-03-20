@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { postPet } from '../../Redux/Actions/actions_pets';
+import { FormControl, InputLabel, Input, FormHelperText, Container, Button, Grid } from "@mui/material"
+import "./CreatePet.css"
 
 function CreatePet(){
-    const { register, handleSubmit, formState: { errors }} = useForm({ mode: "onTouched" });
+    const { register, handleSubmit, formState: { errors }, reset} = useForm({ mode: "onTouched" });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { error } = useSelector((state) => state.formData);
     const [ input, setInput ] = useState({
         name: '',
         animal: '',
@@ -18,15 +23,12 @@ function CreatePet(){
         image: '',
     })
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const onSubmit = evento =>{
-        console.log(evento)
+        console.log(evento);
     }
 
     const handleChange = (e) => {
-        e.preventDefault()
         setInput({
             ...input,
             [e.target.name] : e.target.value
@@ -34,211 +36,198 @@ function CreatePet(){
     }
     const handleSubmit2 = (e) => {
         e.preventDefault();
-        if(errors){
-            alert("Revise los campos...")
+        if (errors.name || errors.animal || errors.breed || errors.height || errors.weight || errors.age || errors.color ) {
+            alert("Revise los datos")
         }else{
-            dispatch(postPet(input));
-            navigate('/');
+            dispatch(postPet(input))
+            navigate('/')
+            alert("Animal agregado correctamente")
         }
     }
 
 
-
-  return (
+     return (
     <div>
-        <form onSubmit={ (e) => handleSubmit(onSubmit)}>
+        {error && <div>Error: {error}</div>}
+        <Container >
+            <Grid container>
+                <Grid item md={12}>
+                    <FormControl margin='normal'>
+                        <InputLabel htmlFor="name">Nombre:</InputLabel>
+                        <Input id="name"  type="text" aria-describedby='name-helper' value={input.name} {...register("name", { required: true })} onChange={handleChange}/>
+                        <FormHelperText id="name-helper">Ingrese el nombre del animal</FormHelperText>
+                        <FormControl className="error-message">{errors.name && <span>Este campo es requerido</span>}</FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+                    <FormControl margin='normal'>
+                        <InputLabel htmlFor="animal">Animal:</InputLabel>
+                        <Input id="animal" aria-describedby='animal-helper'
+                            type="text"
+                            value={input.animal}
+                            {...register("animal", {
+                            required: true,
+                            pattern: /^[a-zA-Z]+$/, // solo letras
+                            minLength: 3, // minimo de caracteres
+                            maxLength: 20 // maximo de caracteres
+                            })}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="animal-helper">Ingrese el tipo de animal</FormHelperText>
+                        <FormControl className="error-message">{errors.animal?.type === "required" && <span>Este campo es requerido</span>}</FormControl>
+                        <FormControl className="error-message">{errors.animal?.type === "pattern" && <span>Debe ser solo letras</span>}</FormControl>
+                        <FormControl className="error-message">{errors.animal?.type === "minLength" && <span>Debe tener al menos 3 caracteres</span>}</FormControl>
+                        <FormControl className="error-message">{errors.animal?.type === "maxLength" && <span>No debe tener más de 20 caracteres</span>}</FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+
+                    <FormControl margin='normal'>
+                        <InputLabel>Raza:</InputLabel>
+                        <Input id="breed" aria-describedby='breed-helper'
+                            type="text"
+                            value={input.breed}
+                            {...register("breed", {
+                            required: true,
+                            pattern: /^[a-zA-Z]+$/, // solo letras
+                            minLength: 3, // minimo de caracteres
+                            maxLength: 20 // maximo de caracteres
+                            })}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="breed-helper">Ingrese el nombre de la raza</FormHelperText>
+                        <FormControl className="error-message">
+                            {errors.breed?.type === "required" && <span>Este campo es requerido</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                            {errors.breed?.type === "pattern" && <span>Debe ser solo letras</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                            {errors.breed?.type === "minLength" && <span>Debe tener al menos 3 caracteres</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                            {errors.breed?.type === "maxLength" && <span>No debe tener más de 20 caracteres</span>}
+                        </FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+                    <FormControl margin='normal'>
+                        <InputLabel>Altura:</InputLabel>
+                        <Input id="height" aria-describedby='height-helper'
+                            type="text"
+                            value={input.height}
+                            {...register("height", {
+                            required: true,
+                            pattern: /^[0-9]+(,[0-9]+)?$/, // solo numeros y una coma decimal
+                            })}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="height-helper">Ingrese la altura (Acepta decimal)</FormHelperText>
+                        <FormControl className="error-message">
+                            {errors.height?.type === "required" && <span>Este campo es requerido</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                        {errors.height?.type === "pattern" && <span>Debe ser un número válido (con una coma decimal si corresponde)</span>}
+                        </FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+                    <FormControl margin='normal'>
+                        <InputLabel>Peso:</InputLabel>
+                        <Input id="weight" aria-describedby='weight-helper' type="number" value={input.weight} {...register("weight", { required: true, min: 0 })} onChange={handleChange}/>
+                        <FormHelperText id="weight-helper">Ingrese el peso</FormHelperText>
+                        <FormControl className="error-message">
+                            {errors.weight && <span>Este campo es requerido y debe ser un número positivo</span>}
+                        </FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+                    <FormControl margin='normal'>
+                        <InputLabel>Edad:</InputLabel>
+                        <Input id="age" aria-describedby='age-helper' type="text"value={input.age} {...register("age", { required: true, min: 0 })} onChange={handleChange}/>
+                        <FormHelperText id="age-helper">Ingrese la edad (Aclare meses o años)</FormHelperText>
+                        <FormControl className="error-message">
+                            {errors.age && <span>Este campo es requerido y debe ser un número positivo</span>}
+                        </FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+
+                    <FormControl margin='normal'>
+                        <InputLabel>Color:</InputLabel>
+                        <Input id="color" aria-describedby='color-helper'
+                            type="text"
+                            value={input.color}
+                            {...register("color", {
+                            required: true,
+                            pattern: /^[a-zA-Z]+$/, // solo letras
+                            minLength: 3, // minimo de caracteres
+                            maxLength: 20 // maximo de caracteres
+                            })}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="color-helper">Ingrese el Color </FormHelperText>
+                        <FormControl className="error-message">
+                        </FormControl>
+                            {errors.color?.type === "required" && <span>Este campo es requerido</span>}
+                        <FormControl className="error-message">
+                            {errors.color?.type === "pattern" && <span>Debe ser solo letras</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                            {errors.color?.type === "minLength" && <span>Debe tener al menos 3 caracteres</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                            {errors.color?.type === "maxLength" && <span>No debe tener más de 20 caracteres</span>}
+                        </FormControl>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+                    <FormControl>
+                        <InputLabel margin='normal'>Description:</InputLabel>
+                        <Input id="description" aria-describedby='description-helper'
+                            type="text"
+                            value={input.description}
+                            {...register("description")}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="description-helper">Ingrese una breve descripcion</FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item md={12}>
+                    <FormControl margin='normal'>
+                        <InputLabel>Imagen:</InputLabel>
+                        <Input id="image" aria-describedby='image-helper'
+                            type="text"
+                            value={input.image}
+                            {...register("image")}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="image-helper">Ingrese el link de una imagen</FormHelperText>
+                    </FormControl>
+                </Grid>
+
             <div>
-                <label>Nombre</label>
-                <input 
-                    type="text" 
-                    name="name" 
-                    id="name"
-                    ref={register("name", {required: true})
-                }
-                onChange={(e) => handleChange(e)}/>
+                <Button variant="contained" type="submit" margin='normal' onClick={handleSubmit2}>
+                    Enviar
+                </Button>
             </div>
+            </Grid>
+        </Container>
+        {/* {formData && (
             <div>
-                {errors.name && <span>Nombre no puede estar vacio</span>}
+                <h2>Animal enviado:</h2>
+                <div>Nombre: {input.name}</div>
+                <div>Animal: {input.animal}</div>
+                <div>Raza: {input.breed}</div>
+                <div>Altura: {input.height}</div>
+                <div>Peso: {input.weight}</div>
+                <div>Edad: {input.age}</div>
+                <div>Dolor: {input.color}</div>
+                <div>Description: {input.description}</div>
+                <div>Imagen: {input.image}</div>
             </div>
-            <div>
-                <label>Animal</label>
-                <input 
-                    type="text" 
-                    name="animal" 
-                    id="animal" 
-                    ref={ register("animal", { 
-                        required: {
-                            value: true,
-                            message: "Este campo no puede estar vacio"
-                        },
-                        pattern:{
-                            value: "^[a-zA-Z]+$",
-                            message: "El tipo de animal solo puede contener letras"
-                        },
-                        minLength:{
-                            value: 3,
-                            message: "Minimo 3 caracteres"
-                        },
-                        maxLength:{
-                            value: 20,
-                            message: "Maximo 20 caracteres"
-                        }
-                    })
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-            { errors.animal && <span><br/>{errors.animal.message} </span>}
-            </div>
-            <div>
-                <label>Raza</label>
-                <input 
-                    type="text" 
-                    name="breed" 
-                    id="breed" 
-                    ref={ register("breed", { 
-                        required: {
-                            value: true,
-                            message: "Este campo no puede estar vacio"
-                        },
-                        pattern:{
-                            value: "^[a-zA-Z]+$",
-                            message: "La raza solo puede contener letras"
-                        },
-                        minLength:{
-                            value: 3,
-                            message: "Minimo 3 caracteres"
-                        },
-                        maxLength:{
-                            value: 20,
-                            message: "Maximo 20 caracteres"
-                        }
-                    })
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-            { errors.breed && <span><br/>{errors.breed.message} </span>}
-            </div>
-            <div>
-                <label>Altura</label>
-                <input 
-                    type="number"
-                    step="0.01" 
-                    name="height" 
-                    id="height" 
-                    ref={ register("height", { 
-                        required: {
-                            value: true,
-                            message: "Este campo no puede estar vacio"
-                        },
-                        pattern:{
-                            value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                            message: "La altura solo puede contener numeros"
-                        },
-                    })
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-            { errors.height && <span><br/>{errors.height.message} </span>}
-            </div>
-            <div>
-                <label>Peso</label>
-                <input 
-                    type="number" 
-                    name="weight" 
-                    id="weight" 
-                    ref={ register("weight", { 
-                        required: {
-                            value: true,
-                            message: "Este campo no puede estar vacio"
-                        },
-                        pattern:{
-                            value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                            message: "Peso solo debe ser un numero"
-                         },
-                    })
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-            { errors.weight && <span><br/>{errors.weight.message} </span>}
-            </div>
-            <div>
-                <label>Edad</label>
-                <input 
-                    type="text" 
-                    name="age" 
-                    id="age" 
-                    ref={ register("age", { 
-                        required: {
-                            value: true,
-                            message: "Este campo no puede estar vacio"
-                        },
-                    })
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-            { errors.age && <span><br/>{errors.age.message} </span>}
-            </div>
-            <div>
-                <label>Color</label>
-                <input 
-                    type="text" 
-                    name="color" 
-                    id="color" 
-                    ref={ register("color", { 
-                        required: {
-                            value: true,
-                            message: "Este campo no puede estar vacio"
-                        },
-                        pattern:{
-                            value: "^[a-zA-Z]+$",
-                            message: "El color solo puede contener letras"
-                        },
-                        minLength:{
-                            value: 3,
-                            message: "Minimo 3 caracteres"
-                        },
-                        maxLength:{
-                            value: 20,
-                            message: "Maximo 20 caracteres"
-                        }
-                    })
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-            { errors.color && <span><br/>{errors.color.message} </span>}
-            </div>
-            <div>
-                <label>Descripcion</label>
-                <input 
-                    type="text" 
-                    name="description" 
-                    id="description" 
-                    ref={ register("description")
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-                <label>Imagen</label>
-                <input 
-                    type="image" 
-                    name="image" 
-                    id="image" 
-                    ref={ register("image")
-                }
-                onChange={(e) => handleChange(e)}/>
-            </div>
-            <div>
-                <button 
-                type="button" 
-                onClick={(e) => handleSubmit2(e)}>Iniciar</button>
-            </div>
-        </form>
+        )} */}
+    
     </div>
   )
 }
