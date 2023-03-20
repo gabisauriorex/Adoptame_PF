@@ -15,21 +15,6 @@ const sequelize = new Sequelize(
 );
 
 // Aca vendrian las relaciones
-<<<<<<< HEAD
-mPet(sequelize)
-mLocation(sequelize)
-mDiseases(sequelize)
-mVaccines(sequelize)
-const {Pet, Location, Diseases, Vaccines} = sequelize.models
-Pet.hasOne(Location)
-Location.belongsTo(Pet)
-
-Pet.belongsToMany(Diseases, {through:"pet_diseases"})
-Diseases.belongsToMany(Pet, {through:"pet_diseases"})
-Pet.belongsToMany(Vaccines, {through: "pet_vaccines"})
-Vaccines.belongsToMany(Pet, {through: "pet_vaccines"})
-
-=======
 mPet(sequelize);
 mLocation(sequelize);
 mDiseases(sequelize);
@@ -42,7 +27,6 @@ Pet.belongsToMany(Vaccines, { through: "pet_vaccines" });
 Vaccines.belongsToMany(Pet, { through: "pet_vaccines" });
 Pet.belongsToMany(Location, { through: "pet_locations" });
 Location.belongsToMany(Pet, { through: "pet_locations" });
->>>>>>> ab8613af6f4b26333b78213238af5b941c0101ff
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
