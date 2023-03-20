@@ -19,7 +19,7 @@ mDiseases(sequelize)
 mVaccines(sequelize)
 const {Pet, Location, Diseases, Vaccines} = sequelize.models
 Pet.hasOne(Location)
-Location.belongsTo(Pet)
+Location.hasMany(Pet)
 // {foreignKey: "LoacationId"}
 Pet.belongsToMany(Diseases, {through:"pet_diseases"})
 Diseases.belongsToMany(Pet, {through:"pet_diseases"})
