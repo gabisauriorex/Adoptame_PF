@@ -52,7 +52,7 @@ const getMascotas = async (req, res) => {
     include: [
       {
         model: Vaccines,
-        attributes: ["name"],
+        attributes: ["id","name"],
         through: { attributes: [] }
       },
       {
@@ -62,7 +62,7 @@ const getMascotas = async (req, res) => {
       }, 
       {
         model: Location,
-        attributes: ["province"],
+        attributes: ["id","province"],
         through:{attributes:[]}
       },
     ]
