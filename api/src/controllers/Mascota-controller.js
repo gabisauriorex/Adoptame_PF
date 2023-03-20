@@ -87,7 +87,26 @@ const mascotaById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const mascotaById = await Pet.findByPk(id);
+    const mascotaById = await Pet.findByPk(id,
+      {
+        include: [
+          {
+            model: Vaccines,
+            attributes: ["name"],
+            through: { attributes: [] }
+          },
+          {
+            model: Diseases,
+            attributes: ["name", "severity"],
+            through: { attributes: [] }
+          }, 
+          {
+            model: Location,
+            attributes: ["province"],
+          },
+        ]
+        });
+    
 
     mascotaById
       ? res.json(mascotaById)
