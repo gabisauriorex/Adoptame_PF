@@ -10,7 +10,6 @@ import {GET_PETS, POST_REQUEST, POST_FAILURE, POST_SUCCESS} from '../ActionsType
 import {pets} from '../../Datos.js';
 
 
-
 /*como no tenemos datos del back por el momento traeremos
  datos de un array cargado de nosotros 😁😁😁*/
  export const postPet = (payload)=>{
@@ -18,7 +17,7 @@ import {pets} from '../../Datos.js';
     dispatch({ type: POST_REQUEST });
     console.log(payload)
     try {
-      const response = await axios.post('http://localhost:3000/mascotas', payload);
+      const response = await axios.post('pets', payload);
       dispatch({
         type: POST_SUCCESS,
         payload: response.data,
@@ -30,17 +29,7 @@ import {pets} from '../../Datos.js';
       })
     }  
   }
-  }
-  //     try{
-  //         let json = await axios.post("http://localhost:3000/", payload);
-  //         return dispatch({
-  //             type: POST_PET,
-  //             payload: json
-  //         })
-  //     } catch(error){
-  //         console.log(error)
-  //         }
-  // }
+}
 
 export const getPets = () => {
  return function (dispatch) {
@@ -54,6 +43,41 @@ export const getPets = () => {
    }
   };
 };
+
+export const filterByBreed = (payload) => {
+  return {
+    type: FILTER_BY_BREED, 
+    payload
+  }
+}
+
+export const filterByAnimal = (payload) => {
+  return {
+    type: FILTER_BY_ANIMAL, 
+    payload
+  }
+}
+
+export const filterBySize = (payload) => {
+  return {
+    type: FILTER_BY_SIZE, 
+    payload
+  }
+}
+
+export const filterByColor = (payload) => {
+  return {
+    type: FILTER_BY_COLOR, 
+    payload
+  }
+}
+
+export const filterByIdent = (payload) => {
+  return {
+    type: FILTER_BY_IDENT, 
+    payload
+  }
+}
 
 export function getDetails(id) {
   //console.log(id)
@@ -75,6 +99,7 @@ export function getDetails(id) {
   /*  return {
     type: "RESET",
   }; */
+
 }
 
 
