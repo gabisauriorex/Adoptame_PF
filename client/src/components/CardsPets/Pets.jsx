@@ -9,12 +9,6 @@ import style from "./Pets.module.css";
 //============MUI===============
 
 
-//=================
-
-
-import {pets} from '../../Datos.js' 
-
-
 function Pets() {
   const dispatch = useDispatch(); 
   const pets = useSelector((state) => state.pets);
@@ -35,13 +29,23 @@ function Pets() {
         return (
         <CardPet
         id={p.id}
-        imagen={p.imagen}
+        imagen={p.image}
         name={p.name}
-        descripcion={p.descripcion}
+        fecha={p.timewait}
+        descripcion={p.description}
+  
+        /* 
+        
+        animal={p.animal}
+        descripcion={p.description}
         color={p.color}
-        edad={p.edad}
-        especie={p.especie}
-        sexo={p.sexo}
+        edad={p.age}
+        especie={p.breed}
+        sexo={p.sex}
+        altura={p.height}
+        peso={p.weight}
+        
+        */
          />
         );
       })}

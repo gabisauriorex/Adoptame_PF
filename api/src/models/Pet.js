@@ -37,6 +37,9 @@ module.exports = (sequelize) => {
         }
       }
     },
+
+  
+
     breed:{
         type: DataTypes.STRING,
         allowNull: false,

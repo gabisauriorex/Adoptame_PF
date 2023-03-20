@@ -10,15 +10,26 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import {Link} from 'react-router-dom'
 
-function CardPet({id,imagen,name,descripcion,color,edad,especie,sexo}) {
+function CardPet({id,imagen,nombre,fecha,descripcion }) {
  
+
+  /* 
+   id={p.id}
+        imagen={p.image}
+        name={p.name}
+        fecha={p.timewait}
+        descripcion={p.description}
+  
+  */
   return (
     <div>
         <Box
             component="ul"
             sx={{ display: "Grid", gap: 2, flexWrap: "wrap", p: 0, m: 0 }}
           >
-            <Card
+            <Card  
+
+             key={id}
               variant="outlined"
               sx={{
                 minHeight: "280px",
@@ -50,29 +61,21 @@ function CardPet({id,imagen,name,descripcion,color,edad,especie,sexo}) {
                 }}
               >
                 <Typography gutterBottom variant="h5" component="div">
-                  {name}
+                  {nombre}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {descripcion}
+                  Encontrado: {fecha}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {color}
+                 Descripcion:  {descripcion}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {edad}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {especie}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {sexo}
-                </Typography>
+            
               </CardContent>
 
             {/*   <CardActions> */}
                 <Button fullWidth="true" variant='outline' sx={{backgroundColor:"#f06292" , color:"black"}}   
                 component={Link}
-                to={`/Pet/:${id}`}
+                to={`/pets/${id}`}
                 > Detalle </Button>
              {/*  </CardActions> */}
             </Card>

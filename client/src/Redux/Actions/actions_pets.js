@@ -2,23 +2,19 @@ import axios from "axios";
 
 //conexion entre front y back
 
-import {GET_PETS, POST_REQUEST, POST_FAILURE, POST_SUCCESS} from '../ActionsTypes/actions_types'
+import {GET_PETS,  POST_SUCCESS, GET_DETAIL_PETS,POST_FAILURE} from '../ActionsTypes/actions_types'
 
 
 
 //estos datos vienen del array harckodeado
-import {pets} from '../../Datos.js';
+/* import {pets} from '../../Datos.js'; */
 
-
-
-/*como no tenemos datos del back por el momento traeremos
- datos de un array cargado de nosotros 😁😁😁*/
- export const postPet = (payload)=>{
+export const postPet = (payload)=>{
   return async (dispatch) => {
     dispatch({ type: POST_REQUEST });
     console.log(payload)
     try {
-      const response = await axios.post('http://localhost:3000/mascotas', payload);
+      const response = await axios.post('pets', payload);
       dispatch({
         type: POST_SUCCESS,
         payload: response.data,
@@ -30,24 +26,17 @@ import {pets} from '../../Datos.js';
       })
     }  
   }
-  }
-  //     try{
-  //         let json = await axios.post("http://localhost:3000/", payload);
-  //         return dispatch({
-  //             type: POST_PET,
-  //             payload: json
-  //         })
-  //     } catch(error){
-  //         console.log(error)
-  //         }
-  // }
+}
 
-export const getPets = () => {
- return function (dispatch) {
+
+
+export const getPets =() => {
+ return async function (dispatch) {
    try {
+    let response = await axios.get("pets");
     dispatch({
       type: GET_PETS,
-       payload:pets,
+       payload:response.data,
     });
    } catch (error) {
     console.error("Error in get Pets: ", error);
@@ -56,25 +45,23 @@ export const getPets = () => {
 };
 
 export function getDetails(id) {
-  //console.log(id)
-
-
-  if (id) {
+ if (id) {
     return async function (dispatch) {
       try {
-       // const response = await axios.get(`Pet/${id}`);
-      dispatch({
+         //pets/1
+         console.log(id)
+       const response = await axios.get(`pets/${id}`);
+       console.log(response.data)
+        dispatch({
           type: GET_DETAIL_PETS,
-          payload:pets
+          payload: response.data,
         });  
       } catch (error) {
-        console.log(error);
+        console.log({message:error.message});
       }
     };
   }
-  /*  return {
-    type: "RESET",
-  }; */
+
 }
 
 

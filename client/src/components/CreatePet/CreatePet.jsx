@@ -52,7 +52,7 @@ function CreatePet(){
         {error && <div>Error: {error}</div>}
           {/*   <Container > */}
            {/*  <Grid container  > */}
-           {/*         <Grid item md={12}> */}
+           {/* <Grid item md={12}> */}
 
             <Typography variant='h6' sx={{backgroundColor:"#f06292" ,borderRadius:5 ,padding:1} }> Registrar Mascota</Typography>
                     <FormControl margin='normal'>
