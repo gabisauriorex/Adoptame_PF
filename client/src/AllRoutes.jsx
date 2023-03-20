@@ -16,7 +16,7 @@ function AllRoutes() {
 
   return (
     <div>
-         {/* <Dashboard/>  */}
+          <Dashboard/>  
 
         <Routes>
           <Route exact path="/"  element={<Landing/>} /> 

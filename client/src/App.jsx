@@ -6,13 +6,15 @@ import AllRoutes from './AllRoutes'
 
 axios.defaults.baseURL="http://localhost:4000/";
 
+
+
 function App() {
  return(
 
     <>
-   <AllRoutes/>
+  <AllRoutes/>
    {/*  <Navbar/> */}
-   
+
     </>
 
  
