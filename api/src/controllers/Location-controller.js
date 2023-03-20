@@ -25,11 +25,12 @@ if (province) {
 
 const getLocation = async (req, res) => {
   try {
-    const { province } = req.query; //opcion por name
+    const { provinceQ } = req.query; //opcion por name
     const location = await Location.findAll();
 
-    if (province) {
-      const LocationName = location.filter( (l) => l.province.toLowerCase().includes(province.toLowerCase()));
+    if (provinceQ) {
+      const LocationName = location.filter( (l) => l.province.toLowerCase().includes(provinceQ.toLowerCase()));
+      console.log(provinceQ)
       LocationName.length ? res.status(200).send(LocationName): res.status(404).send({message:error.message})
     }else{
       res.status(200).send(location)

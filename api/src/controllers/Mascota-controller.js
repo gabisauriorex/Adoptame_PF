@@ -1,6 +1,4 @@
-const { parse } = require("path");
-const {Pet, Vaccines, Diseases} = require("../db.js");
-const {Location} = require("../db.js")
+const {Pet, Vaccines, Diseases,Location} = require("../db.js");
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
 
@@ -8,7 +6,7 @@ const sumarDias = require("./sumarDias");
 
 const createMascota = async (req, res) => {
   try {
-    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, vaccine, disease} = req.body;
+    let {name, animal, breed, height, weight, age, color, description, image, identified, timewait, adopted, vaccine, disease,location} = req.body;
 
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
@@ -35,11 +33,10 @@ const createMascota = async (req, res) => {
       identified,
       timewait,
       adopted,
-      LocationId: Location.id
     });
     await newMascota.addVaccines(vaccine);
     await newMascota.addDiseases(disease);
-
+    await newMascota.addLocation(location);
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -66,6 +63,7 @@ const getMascotas = async (req, res) => {
       {
         model: Location,
         attributes: ["province"],
+        through:{attributes:[]}
       },
     ]
     });
