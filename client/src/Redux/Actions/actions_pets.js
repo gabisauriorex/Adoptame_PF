@@ -2,7 +2,7 @@ import axios from "axios";
 
 //conexion entre front y back
 
-import {GET_PETS,  POST_SUCCESS, GET_DETAIL_PETS,POST_FAILURE} from '../ActionsTypes/actions_types'
+import {GET_PETS,POST_SUCCESS, GET_DETAIL_PETS,} from '../ActionsTypes/actions_types'
 
 
 
@@ -11,19 +11,21 @@ import {GET_PETS,  POST_SUCCESS, GET_DETAIL_PETS,POST_FAILURE} from '../ActionsT
 
 export const postPet = (payload)=>{
   return async (dispatch) => {
-    dispatch({ type: POST_REQUEST });
+
     console.log(payload)
     try {
-      const response = await axios.post('pets', payload);
+      await axios.post('pets', payload);
       dispatch({
         type: POST_SUCCESS,
-        payload: response.data,
+        //payload: response.data,
       });
     } catch (error) {
-      dispatch({
+      /* dispatch({
         type: POST_FAILURE,
         payload: error.message,
-      })
+      }) */
+
+      console.log({message:error.message})
     }  
   }
 }
@@ -48,7 +50,6 @@ export function getDetails(id) {
  if (id) {
     return async function (dispatch) {
       try {
-         //pets/1
          console.log(id)
        const response = await axios.get(`pets/${id}`);
        console.log(response.data)

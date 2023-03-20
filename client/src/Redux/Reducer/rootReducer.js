@@ -1,4 +1,4 @@
-import { GET_DETAIL_PETS, GET_PETS, POST_FAILURE, POST_REQUEST, POST_SUCCESS} from "../ActionsTypes/actions_types";
+import { GET_DETAIL_PETS, GET_PETS, POST_SUCCESS} from "../ActionsTypes/actions_types";
 
 
 
@@ -24,10 +24,10 @@ export default function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
  
-    case POST_SUCCESS:
+     case POST_SUCCESS:
      return {
       ...state
-     }
+     } 
  
     default:
       return state;
