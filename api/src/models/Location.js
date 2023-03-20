@@ -8,16 +8,12 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     province:{
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // idPet: {
-    //   type: DataTypes.UUID,
-    //   foreingkey: true,
-    // }
   },
   {
     timestamps: false,

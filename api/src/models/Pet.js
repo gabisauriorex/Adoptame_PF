@@ -115,6 +115,9 @@ module.exports = (sequelize) => {
       type:DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    id_location:{
+      type: DataTypes.INTEGER,
+    }
   }, {
       timestamps: false,
     });
