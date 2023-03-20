@@ -39,7 +39,12 @@ const getLocation = async (req, res) => {
       let locQ = await Location.findAll({
         where:{
           province: {[Op.iLike]:`%${province}%`}
-        }})
+        ,},include: [
+          {
+            model: Pet,
+            attributes: ["id"],
+            through: { attributes: [] },
+          }]})
         
       res.status(200).send(locQ)
     }else{
