@@ -6,9 +6,9 @@ const Vaccines = require("./Vaccines-routes");
 const Diaseases = require("./Diseases-routes");
 const Location = require("./Location-routes");
 
-router.use("/Mascotas", Pet);
-router.use("/Vaccines", Vaccines);
-router.use("/Diseases", Diaseases);
-router.use("/Location", Location);
+router.use("/pets", Pet);
+router.use("/vaccines", Vaccines);
+router.use("/diseases", Diaseases);
+router.use("/locations", Location);
 
 module.exports = router;

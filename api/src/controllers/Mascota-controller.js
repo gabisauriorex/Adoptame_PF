@@ -106,7 +106,8 @@ const getMascotas = async (req, res) => {
             attributes: ["id", "province"],
             through: { attributes: [] },
           },
-        ]});
+        ],
+      });
       res.status(200).send(queryPets);
     } else {
       res.status(200).send(pets);
