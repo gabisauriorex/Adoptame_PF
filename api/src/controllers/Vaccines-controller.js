@@ -1,4 +1,3 @@
-const { parse } = require("path");
 const { Op } = require("sequelize");
 const {Vaccines,Pet} = require("../db.js");
 

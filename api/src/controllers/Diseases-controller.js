@@ -1,4 +1,3 @@
-
 const { Op } = require("sequelize");
 const {Diseases,Pet} = require("../db.js");
 
