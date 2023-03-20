@@ -13,7 +13,11 @@ module.exports = (sequelize) => {
     province:{
       type: DataTypes.STRING,
       allowNull: false,
-    },  
+    },
+    // idPet: {
+    //   type: DataTypes.UUID,
+    //   foreingkey: true,
+    // }
   },
   {
     timestamps: false,
