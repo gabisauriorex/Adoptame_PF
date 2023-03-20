@@ -1,7 +1,13 @@
-import { GET_PETS ,GET_DETAIL_PETS} from "../ActionsTypes/actions_types";
+import { GET_PETS, POST_FAILURE, POST_REQUEST, POST_SUCCESS} from "../ActionsTypes/actions_types";
+
+
+
 const initialState = {
   pets: [],
-  detail:[]
+  detail:[],
+  // isLoading: false,
+  // error: null,
+  formData: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -11,13 +17,27 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         pets: action.payload,
-
       };
-      case GET_DETAIL_PETS:
-        return {
-          ...state,
-          detail: action.payload,
-        };
+    //⬇️⬇️ CASE FORM....
+    // case POST_REQUEST:
+    //   return{
+    //     ...state,
+    //     isLoading: true,
+    //     error: null,
+    //   };
+    // case POST_SUCCESS:
+    //   return {
+    //     ...state,
+    //     isLoading: false,
+    //     form: action.payload,
+    //   }
+    // case POST_FAILURE:
+    //   return{
+    //     ...state,
+    //     isLoading: false,
+    //     error: action.payload
+    //   }
+//---!FORM!
     default:
       return state;
   }

@@ -1,27 +1,28 @@
 const { Op } = require("sequelize");
-const {Vaccines,Pet} = require("../db.js");
+const {Diseases,Pet} = require("../db.js");
+
 
 //CRUD API MASCOTAS
 
-const createVaccines = async (req, res) => {
+const createDiseases = async (req, res) => {
   try {
-    let {name} = req.body;
+    let {name, severity} = req.body;
 
 // : parseInt(height) || 0,: parseInt(weight) || 0,
-    const newVaccine = await Vaccines.create({name});
+    const newDiseases = await Diseases.create({name, severity});
  
-    newVaccine
-      ? res.status(200).send("Vaccine created successfully 👌")
-      : res.status(404).json("Vaccine not created ☹ ");
+    newDiseases
+      ? res.status(200).send("Disease created successfully 👌")
+      : res.status(404).json("Disease not created ☹ ");
   } catch (error) {
     return res.status(400).send({ message: error.message });
   }
 };
 
-const getVaccines = async (req, res) => {
+const getDiseases = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
-    const vaccine = await Vaccines.findAll({include: [
+    const diseases = await Diseases.findAll( {include: [
     
       {
         model: Pet,
@@ -31,7 +32,7 @@ const getVaccines = async (req, res) => {
     ]});
 
     if (name) {
-      const oneVaccine = await Vaccines.findAll({
+      let oneDisease = await Diseases.findAll({
         where:{
           name: {[Op.iLike]:`%${name}%`}
         },include: [
@@ -40,9 +41,9 @@ const getVaccines = async (req, res) => {
             attributes: ["id"],
             through: { attributes: [] },
           }]})
-        res.status(200).send(oneVaccine)
+        res.status(200).send(oneDisease)
     }else{
-      res.status(200).send(vaccine)
+      res.status(200).send(diseases)
     }
   
   } catch (error) {
@@ -51,8 +52,6 @@ const getVaccines = async (req, res) => {
 };
 
 module.exports = {
-  createVaccines,
-  getVaccines
+  createDiseases,
+  getDiseases
 };
-
-//CRUD API MASCOTAS

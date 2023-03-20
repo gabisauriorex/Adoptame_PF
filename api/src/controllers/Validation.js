@@ -1,5 +1,5 @@
 const {Pet} = require("../db");
-
+const { Op } = require("sequelize");
 const Validation = async (body) => {
 
         let {name, animal, breed, height, weight, age, color, image, identified} = body;
@@ -17,10 +17,12 @@ const Validation = async (body) => {
         } 
 
         if (name === " ") return "Coloque algun nombre a la mascota";
-        const pets = await Pet.findAll();
 
         if (name) {
-            const petName = pets.filter( (p) => p.name.toLowerCase().includes(name.toLowerCase()));
+            const petName = await Pet.findAll({
+                where:{
+                  name: {[Op.iLike]:`%${name}%`}
+                }})
             if (petName.length) return "Nombre ya existe";
         }
     
