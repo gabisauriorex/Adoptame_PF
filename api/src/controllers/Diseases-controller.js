@@ -1,4 +1,4 @@
-const { parse } = require("path");
+
 const { Op } = require("sequelize");
 const {Diseases,Pet} = require("../db.js");
 
@@ -36,7 +36,12 @@ const getDiseases = async (req, res) => {
       let oneDisease = await Diseases.findAll({
         where:{
           name: {[Op.iLike]:`%${name}%`}
-        }})
+        },include: [
+          {
+            model: Pet,
+            attributes: ["id"],
+            through: { attributes: [] },
+          }]})
         res.status(200).send(oneDisease)
     }else{
       res.status(200).send(diseases)

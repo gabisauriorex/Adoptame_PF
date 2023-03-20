@@ -35,7 +35,12 @@ const getVaccines = async (req, res) => {
       const oneVaccine = await Vaccines.findAll({
         where:{
           name: {[Op.iLike]:`%${name}%`}
-        }})
+        },include: [
+          {
+            model: Pet,
+            attributes: ["id"],
+            through: { attributes: [] },
+          }]})
         res.status(200).send(oneVaccine)
     }else{
       res.status(200).send(vaccine)
