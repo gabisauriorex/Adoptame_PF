@@ -40,9 +40,9 @@ module.exports = (sequelize) => {
 
   
    //no se que cambio se hzo aca pero lo acepte 
-  /*   sex:{
-      type: DataTypes.STRING//DataTypes.ENUM("Male","Female")
-    }, */
+     sex:{
+      type: DataTypes.ENUM("Male","Female")
+    }, 
     breed:{
         type: DataTypes.STRING,
         allowNull: false,

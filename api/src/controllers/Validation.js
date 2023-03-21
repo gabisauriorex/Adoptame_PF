@@ -8,7 +8,7 @@ const Validation = async (body) => {
     
         if (!name) return "Coloque un nombre";
         if (!animal) return "Coloque un tipo de animal"; 
-       /*  if (!sex) return "Coloque un sexo"; */
+        if (!sex) return "Coloque un sexo"; 
         if (!breed) return "Coloque una raza";
         if (!height) return "Coloque la altura de la mascota";
         if (!weight) return "Coloque el peso de la mascota";

@@ -14,6 +14,7 @@ function CreatePet(){
     const [ input, setInput ] = useState({
         name: '',
         animal: '',
+        sex:'',
         height: '',
         breed: '',
         weight: '',
@@ -122,6 +123,27 @@ function CreatePet(){
                             {...register("height", {
                             required: true,
                             pattern: /^[0-9]+(,[0-9]+)?$/, // solo numeros y una coma decimal
+                            })}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="height-helper">Ingrese la altura (Acepta decimal)</FormHelperText>
+                        <FormControl className="error-message">
+                            {errors.height?.type === "required" && <span>Este campo es requerido</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                        {errors.height?.type === "pattern" && <span>Debe ser un número válido (con una coma decimal si corresponde)</span>}
+                        </FormControl>
+                    </FormControl>
+                        {/*   </Grid> */}
+                         {/*  <Grid item md={12}> */}
+                    <FormControl margin='normal'>
+                        <InputLabel>Sexo:</InputLabel>
+                        <Input id="sex" aria-describedby='sex-helper'
+                            type="text"
+                            value={input.sex}
+                            {...register("sex", {
+                            required: true,
+                           // pattern: /^[0-9]+(,[0-9]+)?$/, // solo numeros y una coma decimal
                             })}
                             onChange={handleChange}
                         />

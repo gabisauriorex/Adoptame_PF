@@ -22,6 +22,7 @@ export default function Detail(){
                  <p className="p"> <span className="text color">Color </span> <span className="text ">{detail.color}</span></p>
                  <p className="p"> <span className="text color">Altura </span> <span className="text ">{detail.height}</span></p>
                  <p className="p"> <span className="text color">Peso </span> <span className="text ">{detail.weight}</span></p>
+                 <p className="p"> <span className="text color">Sexo </span> <span className="text ">{detail.sex}</span></p>
                  <p className="p"> <span className="text color">Encontrado el dia: </span> <span className="text ">{detail.timewait}</span></p>
                  <p className="p"> <span className="text color">Especie </span> <span className="text ">{detail.breed}</span></p>
                  <p className="p"> <span className="text color">Adoptado </span> <span className="text ">{detail.adopted}</span></p>
