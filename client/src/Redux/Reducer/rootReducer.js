@@ -1,7 +1,6 @@
-import { pets } from "../../Datos";
-import { GET_PETS,
-  POST_FAILURE, 
-  POST_REQUEST, 
+import { GET_DETAIL_PETS, GET_PETS} from "../ActionsTypes/actions_types";
+
+import { 
   POST_SUCCESS, 
   FILTER_BY_BREED,
   FILTER_BY_ANIMAL, 
@@ -15,9 +14,8 @@ import { GET_PETS,
 const initialState = {
   pets: [],
   detail:[],
-  // isLoading: false,
-  // error: null,
-  formData: {},
+  formData:{}
+
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -28,7 +26,18 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         pets: action.payload,
       };
-    case FILTER_BY_BREED:
+    case GET_DETAIL_PETS:
+      return {
+        ...state,
+        detail: action.payload,
+      };
+ 
+     case POST_SUCCESS:
+     return {
+      ...state
+     } 
+ 
+   /*  case FILTER_BY_BREED:
       const fil_breed = [...state.pets].filter( e => e.breed.toLowerCase() = e.action.payload.toLowerCase())
       //console.log(fil_breed);
       return{
@@ -69,7 +78,7 @@ export default function rootReducer(state = initialState, action) {
       return{
         ...state,
         pets: fil_ident
-      };
+      }; */
       
 
     //⬇️⬇️ CASE FORM....

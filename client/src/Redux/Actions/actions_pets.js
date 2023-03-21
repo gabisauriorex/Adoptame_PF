@@ -2,48 +2,43 @@ import axios from "axios";
 
 //conexion entre front y back
 
-import {GET_PETS, POST_REQUEST, POST_FAILURE, POST_SUCCESS} from '../ActionsTypes/actions_types'
+import {GET_PETS,POST_SUCCESS, GET_DETAIL_PETS,FILTER_BY_ANIMAL,FILTER_BY_COLOR,FILTER_BY_SIZE,FILTER_BY_BREED } from '../ActionsTypes/actions_types'
 
 
-
-//estos datos vienen del array harckodeado
-import {pets} from '../../Datos.js';
-
-
-/*como no tenemos datos del back por el momento traeremos
- datos de un array cargado de nosotros 😁😁😁*/
  export const postPet = (payload)=>{
   return async (dispatch) => {
-    dispatch({ type: POST_REQUEST });
+
     console.log(payload)
     try {
-      const response = await axios.post('pets', payload);
+    await axios.post('pets', payload);
       dispatch({
         type: POST_SUCCESS,
-        payload: response.data,
+        //payload: response.data,
       });
     } catch (error) {
-      dispatch({
-        type: POST_FAILURE,
-        payload: error.message,
-      })
+     
+      console.log({message:error.message})
     }  
   }
 }
 
-export const getPets = () => {
- return function (dispatch) {
+
+
+export const getPets =() => {
+ return async function (dispatch) {
    try {
+    let response = await axios.get("pets");
+    console.log(response.data)
     dispatch({
       type: GET_PETS,
-       payload:pets,
+       payload:response.data,
     });
    } catch (error) {
     console.error("Error in get Pets: ", error);
    }
   };
 };
-
+/* 
 export const filterByBreed = (payload) => {
   return {
     type: FILTER_BY_BREED, 
@@ -77,28 +72,24 @@ export const filterByIdent = (payload) => {
     type: FILTER_BY_IDENT, 
     payload
   }
-}
+} */
 
 export function getDetails(id) {
-  //console.log(id)
-
-
-  if (id) {
+ if (id) {
     return async function (dispatch) {
       try {
-       // const response = await axios.get(`Pet/${id}`);
-      dispatch({
+ 
+       const response = await axios.get(`pets/${id}`);
+       console.log(response.data)
+        dispatch({
           type: GET_DETAIL_PETS,
-          payload:pets
+          payload: response.data,
         });  
       } catch (error) {
-        console.log(error);
+        console.log({message:error.message});
       }
     };
   }
-  /*  return {
-    type: "RESET",
-  }; */
 
 }
 
@@ -108,10 +99,6 @@ export function getDetails(id) {
 
 
 modo promesas
-
-
-
-
 export function getVideogames() {
   return function (dispatch) {
     axios
