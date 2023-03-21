@@ -10,7 +10,7 @@ const createMascota = async (req, res) => {
     let {
       name,
       animal,
-      sex,
+     // sex,
       breed,
       height,
       weight,
@@ -41,7 +41,7 @@ const createMascota = async (req, res) => {
     const newMascota = await Pet.create({
       name,
       animal,
-      sex,
+     // sex,
       breed,
       height,
       weight,

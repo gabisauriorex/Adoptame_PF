@@ -2,16 +2,9 @@ import axios from "axios";
 
 //conexion entre front y back
 
-import {GET_PETS,POST_SUCCESS, GET_DETAIL_PETS,} from '../ActionsTypes/actions_types'
+import {GET_PETS,POST_SUCCESS, GET_DETAIL_PETS,FILTER_BY_ANIMAL,FILTER_BY_COLOR,FILTER_BY_SIZE,FILTER_BY_BREED } from '../ActionsTypes/actions_types'
 
 
-
-//estos datos vienen del array harckodeado
-/* import {pets} from '../../Datos.js'; */
-
-
-/*como no tenemos datos del back por el momento traeremos
- datos de un array cargado de nosotros 😁😁😁*/
  export const postPet = (payload)=>{
   return async (dispatch) => {
 
@@ -23,11 +16,7 @@ import {GET_PETS,POST_SUCCESS, GET_DETAIL_PETS,} from '../ActionsTypes/actions_t
         //payload: response.data,
       });
     } catch (error) {
-      /* dispatch({
-        type: POST_FAILURE,
-        payload: error.message,
-      }) */
-
+     
       console.log({message:error.message})
     }  
   }
@@ -39,6 +28,7 @@ export const getPets =() => {
  return async function (dispatch) {
    try {
     let response = await axios.get("pets");
+    console.log(response.data)
     dispatch({
       type: GET_PETS,
        payload:response.data,
@@ -48,7 +38,7 @@ export const getPets =() => {
    }
   };
 };
-
+/* 
 export const filterByBreed = (payload) => {
   return {
     type: FILTER_BY_BREED, 
@@ -82,13 +72,13 @@ export const filterByIdent = (payload) => {
     type: FILTER_BY_IDENT, 
     payload
   }
-}
+} */
 
 export function getDetails(id) {
  if (id) {
     return async function (dispatch) {
       try {
-         console.log(id)
+ 
        const response = await axios.get(`pets/${id}`);
        console.log(response.data)
         dispatch({
@@ -109,10 +99,6 @@ export function getDetails(id) {
 
 
 modo promesas
-
-
-
-
 export function getVideogames() {
   return function (dispatch) {
     axios

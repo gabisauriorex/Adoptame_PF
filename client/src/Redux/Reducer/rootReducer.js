@@ -14,9 +14,8 @@ import {
 const initialState = {
   pets: [],
   detail:[],
-  // isLoading: false,
-  // error: null,
-  formData: {},
+  formData:{}
+
 };
 
 export default function rootReducer(state = initialState, action) {
