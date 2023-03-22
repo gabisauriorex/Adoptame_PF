@@ -1,18 +1,24 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const diseasesSchema = new Schema({
-  idPet: { type: mongoose.Types.ObjectId },
-  name: { type: String },
-  severity: {
-    type: Number,
-    min: 0,
-    max: 5,
+const { DataTypes } = require('sequelize');
+// Exportamos una funcion que define el modelo
+// Luego le injectamos la conexion a sequelize.
+module.exports = (sequelize) => {
+  // defino el modelo
+  sequelize.define('Diseases', {
+    id:{
+      type: DataTypes.INTEGER,
+      autoIncrement:true,
+      primaryKey: true
+    },
+    name:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    severity:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   },
-  description: { type: String },
-});
-
-// Crear el modelo
-const Diseases = mongoose.model("Diseases", diseasesSchema);
-
-module.exports = Diseases;
+  {
+    timestamps: false,
+  });
+};

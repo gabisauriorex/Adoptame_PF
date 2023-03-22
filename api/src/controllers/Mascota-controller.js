@@ -1,29 +1,61 @@
-const { parse } = require("path");
-const Mascota = require("../models/Mascota");
+const { Pet, Vaccines, Diseases, Location } = require("../db.js");
+const { Op } = require("sequelize");
+const Validation = require("./Validation");
+const sumarDias = require("./sumarDias");
 
 //CRUD API MASCOTAS
 
 const createMascota = async (req, res) => {
   try {
-    let { name, color, peso, age, description } = req.body;
-
-    /*  console.log(req.body); */
-
-    /* 
-     otra opcion para eliminar
-    const mascotaDB = new Mascota(body)
-        await mascotaDB.save()
-        res.redirect('/mascotas')
-  */
-
-    let newMascota = await Mascota.create({
+    let {
       name,
+      animal,
+      sex,
+      breed,
+      height,
+      weight,
+      age,
       color,
-      peso: parseInt(peso),
-      age: parseInt(age) || 0,
       description,
-    });
+      image,
+      identified,
+      timewait,
+      adopted,
+      vaccine,
+      disease,
+      location,
+    } = req.body;
 
+    const msg = await Validation(req.body);
+    if (msg) throw new Error(msg);
+
+    if (identified) {
+      var d = new Date();
+      timewait = sumarDias(d, 30);
+      adopted = false;
+    } else {
+      timewait = new Date();
+      adopted = true;
+    }
+
+    const newMascota = await Pet.create({
+      name,
+      animal,
+      sex,
+      breed,
+      height,
+      weight,
+      age,
+      color,
+      description,
+      image,
+      identified,
+      timewait,
+      adopted,
+    });
+    await newMascota.addVaccines(vaccine);
+    await newMascota.addDiseases(disease);
+    await newMascota.addLocation(location);
     newMascota
       ? res.status(200).send("Pet created successfully 👌")
       : res.status(404).json("Pet not created ☹ ");
@@ -35,25 +67,53 @@ const createMascota = async (req, res) => {
 const getMascotas = async (req, res) => {
   try {
     const { name } = req.query; //opcion por name
-    const mascotas = Mascota.find();
+    const pets = await Pet.findAll({
+      include: [
+        {
+          model: Vaccines,
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+        {
+          model: Diseases,
+          attributes: ["name", "severity"],
+          through: { attributes: [] },
+        },
+        {
+          model: Location,
+          attributes: ["id", "province"],
+          through: { attributes: [] },
+        },
+      ],
+    });
 
-    mascotas
-      ? res.json(mascotas)
-      : res.status(404).json({ message: "Pet not Found 😕" });
-
-    /*     if (!name) {
-    } else { 
-    //FILTRA Y OBLIGADAMENTE LOS DEBE PASAR A MINUSUCLAS PARA PODER COMPARAR HACIENDO QUE IGNORE SI ELLA MAYUSCULAS /MISUCULAS
-    let searchGame = allGames.filter((game) =>
-      game.name.toLowerCase().includes(name.toLowerCase())
-    );
-
-    searchGame.length
-      ? res.status(200).json(searchGame)
-      : res.status(404).json({
-          message: "Videogame not Found 😕",
-        });
-     } */
+    if (name) {
+      const queryPets = await Pet.findAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+        },
+        include: [
+          {
+            model: Vaccines,
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Diseases,
+            attributes: ["name", "severity"],
+            through: { attributes: [] },
+          },
+          {
+            model: Location,
+            attributes: ["id", "province"],
+            through: { attributes: [] },
+          },
+        ],
+      });
+      res.status(200).send(queryPets);
+    } else {
+      res.status(200).send(pets);
+    }
   } catch (error) {
     res.status(400).send({ message: error });
   }
@@ -63,59 +123,97 @@ const mascotaById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    //============de la BD==============================
-    const mascotaById = await Mascota.findById({ _id: id });
+    const mascotaById = await Pet.findByPk(id, {
+      include: [
+        {
+          model: Vaccines,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+        {
+          model: Diseases,
+          attributes: ["name", "severity"],
+          through: { attributes: [] },
+        },
+        {
+          model: Location,
+          attributes: ["province"],
+          through: { attributes: [] },
+        },
+      ],
+    });
 
     mascotaById
       ? res.json(mascotaById)
       : res.status(400).json("There are no pets with that id in the db");
-
-    //=============================================
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
 };
 
 const deleteMascota = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    if (!id) {
-      throw new Error("Undefined id 😬");
-    } else {
-      const mascotaDB = await Mascota.findByIdAndDelete({ _id: id });
+    const { id } = req.params;
 
-      if (!mascotaDB) {
-        return res.json({
-          estado: false,
-          mensaje: "could not delete",
-        });
-      } else {
-        return res.json({
-          estado: true,
-          mensaje: "The pet has been removed",
-        });
-      }
+    const mascotaById = await Pet.findByPk(id);
+
+    if (mascotaById) {
+      mascotaById.adopted = true;
+      //console.log(mascotaById)
+      await mascotaById.save();
+      res.json("La mascota fue adoptada con exito");
+    } else {
+      res.status(400).json("There are no pets with that id in the db");
     }
   } catch (error) {
-    return res.status(500).send({ error: error.message });
+    res.status(400).send({ message: error.message });
   }
 };
 
 const updateMascota = async (req, res) => {
   const { id } = req.params;
-  const { body } = req.body;
+  const {
+    name,
+    animal,
+    sex,
+    breed,
+    height,
+    weight,
+    age,
+    color,
+    description,
+    image,
+    identified,
+    timewait,
+    adopted,
+  } = req.body;
 
   try {
     if (!id) {
-      throw new Error("Undefined id 😬");
+      res.status(400).json("No se encuentra ID");
     } else {
-      const mascotaDB = await Mascota.findByIdAndUpdate(id, body);
-      //console.log(mascotaDB);
-      res.json({
-        estado: true,
-        mensaje: "modified pet",
-      });
+      const mascotaById = await Pet.findByPk(id);
+      if (name) mascotaById.name = name;
+      if (animal) mascotaById.animal = animal;
+      if (sex) mascotaById.sex = sex;
+      if (breed) mascotaById.breed = breed;
+      if (height) mascotaById.height = height;
+      if (weight) mascotaById.weight = weight;
+      if (age) mascotaById.age = age;
+      if (color) mascotaById.color = color;
+      if (description) mascotaById.description = description;
+      if (image) mascotaById.image = image;
+      if (identified) mascotaById.identified = identified;
+      if (timewait) mascotaById.timewait = timewait;
+      if (adopted) mascotaById.adopted = adopted;
+      // for (let prop in body) {
+      //       var aux = body[prop];
+      //       mascotaById.prop = aux;
+      //   }
+
+      mascotaById.save();
+      console.log(mascotaById);
+      res.json("El cambio fue realizado con exito");
     }
   } catch (error) {
     return res.status(500).send({ error: error.message });
