@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const {Location, Pet} = require("../db.js");
+const {Location, Pet,User} = require("../db.js");
 
 //CRUD API MASCOTAS
 
@@ -32,6 +32,11 @@ const getLocation = async (req, res) => {
         attributes: ["id"],
         through:{attributes:[]}
       },
+      {
+        model: User,
+        attributes: ["id"],
+        through:{attributes:[]}
+      }
     ]});
 
     if (province) {

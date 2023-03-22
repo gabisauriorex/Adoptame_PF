@@ -6,7 +6,7 @@ const mPet = require("./models/Pet");
 const mDiseases = require("./models/Diseases");
 const mLocation = require("./models/Location");
 const mVaccines = require("./models/Vaccines");
-const mUsuario = require("./models/Usuario")
+const mUser = require("./models/User")
 const sequelize = new Sequelize(
  URL,
  //`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -21,8 +21,8 @@ mPet(sequelize);
 mLocation(sequelize);
 mDiseases(sequelize);
 mVaccines(sequelize);
-mUsuario(sequelize);
-const { Pet, Location, Diseases, Vaccines, Usuario } = sequelize.models;
+mUser(sequelize);
+const { Pet, Location, Diseases, Vaccines, User } = sequelize.models;
 
 Pet.belongsToMany(Diseases, { through: "pet_diseases" });
 Diseases.belongsToMany(Pet, { through: "pet_diseases" });
@@ -31,9 +31,10 @@ Vaccines.belongsToMany(Pet, { through: "pet_vaccines" });
 Pet.belongsToMany(Location, { through: "pet_locations" });
 Location.belongsToMany(Pet, { through: "pet_locations" });
 
-Usuario.belongsToMany(Pet, {through: "usuario-pet"});
-Pet.belongsToMany(Usuario, {through: "usuario-pet"});
-
+User.belongsToMany(Pet, {through: "user_pets"});
+Pet.belongsToMany(User, {through: "user_pets"});
+User.belongsToMany(Location, {through: "user_locations"});
+Location.belongsToMany(User, {through: "user_locations"});
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

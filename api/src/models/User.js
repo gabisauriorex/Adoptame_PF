@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('Usuario', {
+  sequelize.define('User', {
     id:{
         type: DataTypes.INTEGER,
         autoIncrement:true,
@@ -44,23 +44,23 @@ module.exports = (sequelize) => {
         }
   
       },
-      province: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "La provincia no puede estar vacio"
-          },
-        //   isAlpha:{
-        //     args: true,
-        //     msg: "La provincia solo puede contener letras"
-        //   },
-          len: {
-            args: [3, 30],
-            msg: "El numero de caracteres de la provincia debe tener entre 3 y 30 caracteres",
-          }
-        }
-      },
+      // province: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     notNull: {
+      //       msg: "La provincia no puede estar vacio"
+      //     },
+      //   //   isAlpha:{
+      //   //     args: true,
+      //   //     msg: "La provincia solo puede contener letras"
+      //   //   },
+      //     len: {
+      //       args: [3, 30],
+      //       msg: "El numero de caracteres de la provincia debe tener entre 3 y 30 caracteres",
+      //     }
+      //   }
+      // },
       phone: {
         type: DataTypes.STRING,
         allowNull: true,

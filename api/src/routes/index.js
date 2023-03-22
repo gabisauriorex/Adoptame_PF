@@ -18,8 +18,4 @@ router.use("/locations", Location);
 router.use("/users", Usuario);
 router.use("/", Auth);
 
-
-router.post("/users", (req, res) => {
-    console.log("Estoy en usuario");
-});
 module.exports = router;
