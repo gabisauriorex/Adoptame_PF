@@ -55,7 +55,7 @@ const getUsuario = async (req, res) => {
           },
           {
             model: Location,
-            attributes: ["province"],
+            attributes: ["id", "province"],
             through: { attributes: [] },
           },
         ],
@@ -69,33 +69,28 @@ const getUsuario = async (req, res) => {
   }
 };
 
-const UsuarioById = async (req, res) => {
+const usuarioById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const mascotaById = await Pet.findByPk(id, {
+    const userById = await User.findByPk(id, {
       include: [
         {
-          model: Vaccines,
-          attributes: ["name"],
-          through: { attributes: [] },
-        },
-        {
-          model: Diseases,
-          attributes: ["name", "severity"],
+          model: Pet,
+          attributes: ["id", "name"],
           through: { attributes: [] },
         },
         {
           model: Location,
-          attributes: ["province"],
+          attributes: ["id", "province"],
           through: { attributes: [] },
         },
       ],
     });
 
-    mascotaById
-      ? res.json(mascotaById)
-      : res.status(400).json("There are no pets with that id in the db");
+    userById
+      ? res.json(userById)
+      : res.status(400).json("There are no users with that id in the db");
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
@@ -105,15 +100,13 @@ const deleteUsuario = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const mascotaById = await Pet.findByPk(id);
+    const userById = await User.findByPk(id);
 
-    if (mascotaById) {
-      mascotaById.identified = false;
-      //console.log(mascotaById)
-      await mascotaById.save();
-      res.json("La mascota fue adoptada con exito");
+    if (userById) {
+      await userById.save();
+      res.json("El usuario fue borrado con exito");
     } else {
-      res.status(400).json("There are no pets with that id in the db");
+      res.status(400).json("There are no users with that id in the db");
     }
   } catch (error) {
     res.status(400).send({ message: error.message });
@@ -122,45 +115,20 @@ const deleteUsuario = async (req, res) => {
 
 const updateUsuario = async (req, res) => {
   const { id } = req.params;
-  const {
-    name,
-    animal,
-    breed,
-    height,
-    weight,
-    age,
-    color,
-    description,
-    image,
-    identified,
-    timewait,
-    adopted,
-  } = req.body;
+  const { fullname, address, phone, email } = req.body;
 
   try {
     if (!id) {
       res.status(400).json("No se encuentra ID");
     } else {
-      const mascotaById = await Pet.findByPk(id);
-      if (name) mascotaById.name = name;
-      if (animal) mascotaById.animal = animal;
-      if (breed) mascotaById.breed = breed;
-      if (height) mascotaById.height = height;
-      if (weight) mascotaById.weight = weight;
-      if (age) mascotaById.age = age;
-      if (color) mascotaById.color = color;
-      if (description) mascotaById.description = description;
-      if (image) mascotaById.image = image;
-      if (identified) mascotaById.identified = identified;
-      if (timewait) mascotaById.timewait = timewait;
-      if (adopted) mascotaById.adopted = adopted;
-      // for (let prop in body) {
-      //       var aux = body[prop];
-      //       mascotaById.prop = aux;
-      //   }
+      const userById = await User.findByPk(id);
+      if (fullname) userById.fullname = fullname;
+      if (address) userById.address = address;
+      if (phone) userById.phone = phone;
+      if (email) userById.email = email;
 
-      mascotaById.save();
-      console.log(mascotaById);
+      userById.save();
+      console.log(userById);
       res.json("El cambio fue realizado con exito");
     }
   } catch (error) {
@@ -171,7 +139,7 @@ const updateUsuario = async (req, res) => {
 module.exports = {
   createUsuario,
   getUsuario,
-  UsuarioById,
+  usuarioById,
   deleteUsuario,
   updateUsuario,
 };

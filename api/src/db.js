@@ -33,7 +33,8 @@ Location.belongsToMany(Pet, { through: "pet_locations" });
 
 User.belongsToMany(Pet, {through: "user_pets"});
 Pet.belongsToMany(User, {through: "user_pets"});
-
+User.belongsToMany(Location, {through: "user_locations"});
+Location.belongsToMany(User, {through: "user_locations"});
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
