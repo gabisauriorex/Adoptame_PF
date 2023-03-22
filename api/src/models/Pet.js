@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-require("express-validator");
+// require("express-validator");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -39,8 +39,8 @@ module.exports = (sequelize) => {
           },
         },
       },
-      sex: {
-        type: DataTypes.ENUM("Male", "Female"),
+      sex:{
+        type: DataTypes.ENUM("Male","Female"),
       },
 
       breed: {

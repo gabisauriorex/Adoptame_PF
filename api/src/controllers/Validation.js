@@ -4,7 +4,7 @@ const Validation = async (body) => {
 
 
     //sex
-        let {name, animal,  breed, height, weight, age, color, image, identified} = body;
+        let {name, animal,sex,  breed, height, weight, age, color, image, identified} = body;
     
         if (!name) return "Coloque un nombre";
         if (!animal) return "Coloque un tipo de animal"; 
