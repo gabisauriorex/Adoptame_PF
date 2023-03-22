@@ -1,32 +1,24 @@
-const { User, Pet,Location } = require("../db.js");
+const { User, Pet, Location } = require("../db.js");
 const { Op } = require("sequelize");
 //const Validation = require("./Validation");
-
 
 //CRUD API MASCOTAS
 
 const createUsuario = async (req, res) => {
   try {
-    let {
-        fullname,
-        address,
-        phone,
-        email,
-        pet,
-        location
-    } = req.body;
+    let { fullname, address, phone, email, pet, location } = req.body;
 
     //const msg = await Validation(req.body);
     //if (msg) throw new Error(msg);
 
     const newUsuario = await User.create({
-        fullname,
-        address,
-        phone,
-        email
+      fullname,
+      address,
+      phone,
+      email,
     });
     await newUsuario.addPet(pet);
-    await newUsuario.addLocation(location)
+    await newUsuario.addLocation(location);
     newUsuario
       ? res.status(200).send("Usuario created successfully 👌")
       : res.status(404).json("Usuario not created ☹ ");
@@ -36,35 +28,45 @@ const createUsuario = async (req, res) => {
 };
 
 const getUsuario = async (req, res) => {
- 
-try {
-  const {name} = req.query;
+  try {
+    const { name } = req.query;
 
-  const users = await User.findAll({
-    include: [
-      {model: Pet, attributes:["id","name"], through:{attributes:[]}},
-      {model: Location, attributes:["province"], through:{attributes:[]}}
-  ]
-  });
-  
-  if(name){
-    const queryUser = await User.findAll({
-    where: {
-      fullname: { [Op.iLike]: `%${name}%` },
-    },
-    include:[
-    {model: Pet, attributes:["id","name"], through:{attributes:[]}},
-    {model: Location, attributes:["province"], through:{attributes:[]}}]  
+    const users = await User.findAll({
+      include: [
+        { model: Pet, attributes: ["id", "name"], through: { attributes: [] } },
+        {
+          model: Location,
+          attributes: ["province"],
+          through: { attributes: [] },
+        },
+      ],
     });
-    res.status(200).send(queryUser);
-  }else{
-    res.status(200).send(users)
+
+    if (name) {
+      const queryUser = await User.findAll({
+        where: {
+          fullname: { [Op.iLike]: `%${name}%` },
+        },
+        include: [
+          {
+            model: Pet,
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Location,
+            attributes: ["province"],
+            through: { attributes: [] },
+          },
+        ],
+      });
+      res.status(200).send(queryUser);
+    } else {
+      res.status(200).send(users);
+    }
+  } catch (error) {
+    res.status(400).send({ message: error });
   }
-} catch (error) {
-  res.status(400).send({message: error});
-}
-
-
 };
 
 const UsuarioById = async (req, res) => {
@@ -167,9 +169,9 @@ const updateUsuario = async (req, res) => {
 };
 
 module.exports = {
-    createUsuario,
-    getUsuario,
-    UsuarioById,
-    deleteUsuario,
-    updateUsuario,
+  createUsuario,
+  getUsuario,
+  UsuarioById,
+  deleteUsuario,
+  updateUsuario,
 };
