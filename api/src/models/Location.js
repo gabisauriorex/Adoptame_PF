@@ -13,10 +13,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // idPet: {
-    //   type: DataTypes.UUID,
-    //   foreingkey: true,
-    // }
   },
   {
     timestamps: false,
