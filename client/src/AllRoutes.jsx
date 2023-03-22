@@ -16,12 +16,12 @@ function AllRoutes() {
 
   return (
     <div>
-         {/* <Dashboard/>  */}
+          <Dashboard/>  
 
         <Routes>
           <Route exact path="/"  element={<Landing/>} /> 
           <Route exact path="/Adopta" element={<Adopta/>} />
-          <Route exact path="/Pet/:id" element={<Detail/>} />
+          <Route exact path="/pets/:id" element={<Detail/>} />
           <Route exact path="/Home" element={<Home/>} />
           <Route exact path="/Dona" element={<Dona/>} />
          <Route exact path="/About" element={<About/>} />

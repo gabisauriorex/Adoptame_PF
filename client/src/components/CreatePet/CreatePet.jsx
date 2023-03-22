@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postPet } from '../../Redux/Actions/actions_pets';
-import { FormControl, InputLabel, Input, FormHelperText, Container, Button, Grid } from "@mui/material"
+import { FormControl, InputLabel, Input, FormHelperText, Container, Button, Grid, Typography } from "@mui/material"
 import "./CreatePet.css"
 
 function CreatePet(){
@@ -14,6 +14,7 @@ function CreatePet(){
     const [ input, setInput ] = useState({
         name: '',
         animal: '',
+        sex:'',
         height: '',
         breed: '',
         weight: '',
@@ -47,19 +48,22 @@ function CreatePet(){
 
 
      return (
-    <div>
+        <div className='containerPrincipal'>
+       <form  className='containerForm'>
         {error && <div>Error: {error}</div>}
-        <Container >
-            <Grid container>
-                <Grid item md={12}>
+          {/*   <Container > */}
+           {/*  <Grid container  > */}
+           {/* <Grid item md={12}> */}
+
+            <Typography variant='h6' sx={{backgroundColor:"#f06292" ,borderRadius:5 ,padding:1} }> Registrar Mascota</Typography>
                     <FormControl margin='normal'>
                         <InputLabel htmlFor="name">Nombre:</InputLabel>
                         <Input id="name"  type="text" aria-describedby='name-helper' value={input.name} {...register("name", { required: true })} onChange={handleChange}/>
                         <FormHelperText id="name-helper">Ingrese el nombre del animal</FormHelperText>
                         <FormControl className="error-message">{errors.name && <span>Este campo es requerido</span>}</FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                     {/*          </Grid> */}
+                     {/*       <Grid item md={12}> */}
                     <FormControl margin='normal'>
                         <InputLabel htmlFor="animal">Animal:</InputLabel>
                         <Input id="animal" aria-describedby='animal-helper'
@@ -79,8 +83,8 @@ function CreatePet(){
                         <FormControl className="error-message">{errors.animal?.type === "minLength" && <span>Debe tener al menos 3 caracteres</span>}</FormControl>
                         <FormControl className="error-message">{errors.animal?.type === "maxLength" && <span>No debe tener más de 20 caracteres</span>}</FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                     {/*    </Grid>
+                     <Grid item md={12}> */}
 
                     <FormControl margin='normal'>
                         <InputLabel>Raza:</InputLabel>
@@ -109,8 +113,8 @@ function CreatePet(){
                             {errors.breed?.type === "maxLength" && <span>No debe tener más de 20 caracteres</span>}
                         </FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                     {/*   </Grid> */}
+                    {/*   <Grid item md={12}> */}
                     <FormControl margin='normal'>
                         <InputLabel>Altura:</InputLabel>
                         <Input id="height" aria-describedby='height-helper'
@@ -130,8 +134,29 @@ function CreatePet(){
                         {errors.height?.type === "pattern" && <span>Debe ser un número válido (con una coma decimal si corresponde)</span>}
                         </FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                        {/*   </Grid> */}
+                         {/*  <Grid item md={12}> */}
+                    <FormControl margin='normal'>
+                        <InputLabel>Sexo:</InputLabel>
+                        <Input id="sex" aria-describedby='sex-helper'
+                            type="text"
+                            value={input.sex}
+                            {...register("sex", {
+                            required: true,
+                           // pattern: /^[0-9]+(,[0-9]+)?$/, // solo numeros y una coma decimal
+                            })}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText id="height-helper">Ingrese la altura (Acepta decimal)</FormHelperText>
+                        <FormControl className="error-message">
+                            {errors.height?.type === "required" && <span>Este campo es requerido</span>}
+                        </FormControl>
+                        <FormControl className="error-message">
+                        {errors.height?.type === "pattern" && <span>Debe ser un número válido (con una coma decimal si corresponde)</span>}
+                        </FormControl>
+                    </FormControl>
+                        {/*   </Grid> */}
+                         {/*  <Grid item md={12}> */}
                     <FormControl margin='normal'>
                         <InputLabel>Peso:</InputLabel>
                         <Input id="weight" aria-describedby='weight-helper' type="number" value={input.weight} {...register("weight", { required: true, min: 0 })} onChange={handleChange}/>
@@ -140,8 +165,8 @@ function CreatePet(){
                             {errors.weight && <span>Este campo es requerido y debe ser un número positivo</span>}
                         </FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                        {/*  </Grid> */}
+                        {/* <Grid item md={12}> */}
                     <FormControl margin='normal'>
                         <InputLabel>Edad:</InputLabel>
                         <Input id="age" aria-describedby='age-helper' type="text"value={input.age} {...register("age", { required: true, min: 0 })} onChange={handleChange}/>
@@ -150,8 +175,8 @@ function CreatePet(){
                             {errors.age && <span>Este campo es requerido y debe ser un número positivo</span>}
                         </FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                        {/*   </Grid> */}
+                        {/*   <Grid item md={12}> */}
 
                     <FormControl margin='normal'>
                         <InputLabel>Color:</InputLabel>
@@ -180,8 +205,8 @@ function CreatePet(){
                             {errors.color?.type === "maxLength" && <span>No debe tener más de 20 caracteres</span>}
                         </FormControl>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                        {/*  </Grid> */}
+                     {/*      <Grid item md={12}> */}
                     <FormControl>
                         <InputLabel margin='normal'>Description:</InputLabel>
                         <Input id="description" aria-describedby='description-helper'
@@ -192,8 +217,8 @@ function CreatePet(){
                         />
                         <FormHelperText id="description-helper">Ingrese una breve descripcion</FormHelperText>
                     </FormControl>
-                </Grid>
-                <Grid item md={12}>
+                    {/*  </Grid> */}
+                         {/*   <Grid item md={12}> */}
                     <FormControl margin='normal'>
                         <InputLabel>Imagen:</InputLabel>
                         <Input id="image" aria-describedby='image-helper'
@@ -204,16 +229,16 @@ function CreatePet(){
                         />
                         <FormHelperText id="image-helper">Ingrese el link de una imagen</FormHelperText>
                     </FormControl>
-                </Grid>
+                     {/*   </Grid> */}
 
-            <div>
+            <FormControl className='containerBoton'> 
                 <Button variant="contained" type="submit" margin='normal' onClick={handleSubmit2}>
                     Enviar
                 </Button>
-            </div>
-            </Grid>
-        </Container>
-        {/* {formData && (
+            </FormControl>
+                 {/*    </Grid> */}
+                {/*   </Container> */}
+             {/* {formData && (
             <div>
                 <h2>Animal enviado:</h2>
                 <div>Nombre: {input.name}</div>
@@ -228,7 +253,10 @@ function CreatePet(){
             </div>
         )} */}
     
-    </div>
+    </form>
+        </div>
+
+    
   )
 }
 

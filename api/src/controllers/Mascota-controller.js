@@ -10,6 +10,7 @@ const createMascota = async (req, res) => {
     let {
       name,
       animal,
+      sex,
       breed,
       height,
       weight,
@@ -40,6 +41,7 @@ const createMascota = async (req, res) => {
     const newMascota = await Pet.create({
       name,
       animal,
+      sex,
       breed,
       height,
       weight,
@@ -156,7 +158,7 @@ const deleteMascota = async (req, res) => {
     const mascotaById = await Pet.findByPk(id);
 
     if (mascotaById) {
-      mascotaById.identified = false;
+      mascotaById.adopted = true;
       //console.log(mascotaById)
       await mascotaById.save();
       res.json("La mascota fue adoptada con exito");
@@ -173,6 +175,7 @@ const updateMascota = async (req, res) => {
   const {
     name,
     animal,
+    sex,
     breed,
     height,
     weight,
@@ -192,6 +195,7 @@ const updateMascota = async (req, res) => {
       const mascotaById = await Pet.findByPk(id);
       if (name) mascotaById.name = name;
       if (animal) mascotaById.animal = animal;
+      if (sex) mascotaById.sex = sex;
       if (breed) mascotaById.breed = breed;
       if (height) mascotaById.height = height;
       if (weight) mascotaById.weight = weight;

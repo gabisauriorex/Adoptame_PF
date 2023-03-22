@@ -37,6 +37,12 @@ module.exports = (sequelize) => {
         }
       }
     },
+
+  
+   //no se que cambio se hzo aca pero lo acepte 
+     sex:{
+      type: DataTypes.ENUM("Male","Female")
+    }, 
     breed:{
         type: DataTypes.STRING,
         allowNull: false,

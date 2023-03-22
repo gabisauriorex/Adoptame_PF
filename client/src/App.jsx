@@ -4,18 +4,16 @@ import './App.css'
 import AllRoutes from './AllRoutes'
 
 
-axios.defaults.baseURL="http://localhost:4000/";
+axios.defaults.baseURL="http://localhost:3000/";
+
+
 
 function App() {
  return(
+   <>
+  <AllRoutes/>
 
-    <>
-   <AllRoutes/>
-   {/*  <Navbar/> */}
-   
-    </>
-
- 
+  </>
  )
  
 }

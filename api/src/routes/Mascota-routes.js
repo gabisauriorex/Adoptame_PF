@@ -11,7 +11,7 @@ const {
 
 router.get("/", getMascotas); //trae todas las mascotas
 router.get("/:id", mascotaById); //trae por id
-router.post("/", createMascota); //crea una mascota
+router.post("/",  createMascota); //crea una mascota
 
 //agregados
 router.put("/:id", updateMascota); //actualiza un videogame
