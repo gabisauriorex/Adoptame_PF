@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const {User} = require('../db');
+const {UserLogin} = require('../db');
 
 const Post_User = async (request, response) => {
     const { body } = request
@@ -11,7 +11,7 @@ const Post_User = async (request, response) => {
     const passwordHash = await bcrypt.hash(password, saltRounds)
   
    
-    const savedUser = await User.create ({
+    const savedUser = await UserLogin.create ({
       username,
       name,
       passwordHash
