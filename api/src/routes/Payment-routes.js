@@ -1,5 +1,6 @@
 const express = require("express");
-const { getPay, createPay } = require("../controllers/MercadoPago");
+const { createPay, getPay } = require("../controllers-Pet/MercadoPago");
+
 const router = express.Router();
 
 

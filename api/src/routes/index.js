@@ -22,6 +22,5 @@ router.use("/diseases", Diseases);
 router.use("/locations", Location);
 router.use("/users", Usuario);
 router.use("/payments",Payment)
-router.use("/", Auth);
 
 module.exports = router;
