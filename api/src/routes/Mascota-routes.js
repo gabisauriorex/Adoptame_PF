@@ -12,10 +12,8 @@ const {
 
 router.get("/", getMascotas); //trae todas las mascotas
 router.get("/:id", mascotaById); //trae por id
-router.post("/", createMascota); //crea una mascota
-
-//agregados
-router.put("/:id", updateMascota); //actualiza un videogame
-router.delete("/:id", deleteMascota); //elimina un videogame
+router.post("/",  createMascota); //crea una mascota
+router.put("/:id", updateMascota); //actualiza una mascota
+router.delete("/:id", deleteMascota); //elimina una mascota
 
 module.exports = router;
