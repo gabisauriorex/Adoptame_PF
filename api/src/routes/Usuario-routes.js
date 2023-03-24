@@ -8,11 +8,15 @@ const {
   updateUsuario,
 } = require("../controllers-Usuario/Usuario-controller");
 
+//const notFound = require('./middleware/notFound.js')
+const handleErrors = require('../middleware/handleError')
+const userExtractor = require('../middleware/UserExtractor')
+
 
 router.get("/", getUsuario); //trae todos los usuarios
 router.get("/:id", UsuarioById); //trae por id
-router.post("/", createUsuario); //crea una usuario
-router.put("/:id", updateUsuario); //actualiza un usuario
-router.delete("/:id", deleteUsuario); //elimina un usuario
+router.post("/", userExtractor, createUsuario); //crea una usuario
+router.put("/:id", userExtractor, updateUsuario); //actualiza un usuario
+router.delete("/:id",userExtractor, deleteUsuario); //elimina un usuario
 
 module.exports = router;

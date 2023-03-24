@@ -6,7 +6,9 @@ const mPet = require("./models/Pet");
 const mDiseases = require("./models/Diseases");
 const mLocation = require("./models/Location");
 const mVaccines = require("./models/Vaccines");
-const mUsuario = require("./models/Usuario")
+const mUsuario = require("./models/Usuario");
+const mUser = require("./models/User");
+
 const sequelize = new Sequelize(
  URL,
  //`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -22,7 +24,9 @@ mLocation(sequelize);
 mDiseases(sequelize);
 mVaccines(sequelize);
 mUsuario(sequelize);
-const { Pet, Location, Diseases, Vaccines, Usuario } = sequelize.models;
+mUser(sequelize);
+
+const { Pet, Location, Diseases, Vaccines, Usuario, User } = sequelize.models;
 
 Pet.belongsToMany(Diseases, { through: "pet_diseases" });
 Diseases.belongsToMany(Pet, { through: "pet_diseases" });
@@ -33,6 +37,9 @@ Location.belongsToMany(Pet, { through: "pet_locations" });
 
 Usuario.belongsToMany(Pet, {through: "usuario-pet"});
 Pet.belongsToMany(Usuario, {through: "usuario-pet"});
+
+Usuario.hasOne(User);
+User.hasOne(Usuario);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
