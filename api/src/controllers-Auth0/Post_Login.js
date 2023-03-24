@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const {User} = require('../db');
+const {UserLogin} = require('../db');
 
 const Post_Login = async (request, response) => {
     const { body } = request
     const { username, password } = body
   
-    const user = await User.findOne ({  where: {
+    const user = await UserLogin.findOne ({  where: {
       username
     } })
   

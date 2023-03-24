@@ -1,8 +1,7 @@
-const bcrypt = require('bcrypt');
-const {User} = require('../db');
+const {UserLogin} = require('../db');
 
 const Get_User = async (request, response) => {
-    const users = await User.findAll({})
+    const users = await UserLogin.findAll({})
     response.json(users)
   }
 
