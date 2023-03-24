@@ -3,9 +3,10 @@ const router = Router();
 
 const Pet = require("./Mascota-routes");
 const Vaccines = require("./Vaccines-routes");
-const Diaseases = require("./Diseases-routes");
+const Diseases = require("./Diseases-routes");
 const Location = require("./Location-routes");
 const Usuario = require("./Usuario-routes");
+const Payment = require("./Payment-routes")
 
 const usersRouter = require('./user-routes')
 const loginRouter = require('./login-routes')
@@ -17,8 +18,9 @@ router.use('/api/login', loginRouter)
 
 router.use("/pets", Pet);
 router.use("/vaccines", Vaccines);
-router.use("/diseases", Diaseases);
+router.use("/diseases", Diseases);
 router.use("/locations", Location);
 router.use("/users", Usuario);
+router.use("/payments",Payment)
 
 module.exports = router;
