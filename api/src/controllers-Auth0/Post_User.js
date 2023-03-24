@@ -10,7 +10,7 @@ const Post_User = async (request, response) => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
   
-   
+   console.log(passwordHash)
     const savedUser = await UserLogin.create ({
       username,
       name,
