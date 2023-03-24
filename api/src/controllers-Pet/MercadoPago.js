@@ -1,4 +1,3 @@
-const { default: axios } = require("axios")
 const mercadopago = require("mercadopago")
 const {MPTOKEN}=process.env
 mercadopago.configure({
