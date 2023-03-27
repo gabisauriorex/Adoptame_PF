@@ -10,7 +10,9 @@ const {
 } = require("../controllers-Pet/Mascota-controller");
 const Autenticacion = require("../middleware/Autenticacion");
 
-router.get("/", Autenticacion, getMascotas); //trae todas las mascotas
+console.log(Autenticacion)
+
+router.get("/", getMascotas); //trae todas las mascotas
 router.get("/:id", Autenticacion, mascotaById); //trae por id
 router.post("/", Autenticacion, createMascota); //crea una mascota
 router.put("/:id",Autenticacion, updateMascota); //actualiza una mascota
