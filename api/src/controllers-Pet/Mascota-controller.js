@@ -2,6 +2,19 @@ const { Pet, Vaccines, Diseases, Location } = require("../db.js");
 const { Op } = require("sequelize");
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
+const fs = require("fs");
+
+//CLOUDINARY
+const cloudinary = require('cloudinary').v2;
+const {CLOUD_NAME, API_KEY, API_SECRET} = process.env;
+
+// Configuration 
+cloudinary.config({
+  cloud_name: CLOUD_NAME,
+  api_key: API_KEY,
+  api_secret: API_SECRET,
+  secure: true
+});
 
 //CRUD API MASCOTAS
 
