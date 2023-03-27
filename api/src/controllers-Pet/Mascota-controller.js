@@ -39,17 +39,6 @@ const createMascota = async (req, res) => {
       location,
     } = req.body;
 
-    aux = req.files.image.tempFilePath;
-
-    const result = await cloudinary.uploader.upload(aux, { folder: "pets" })
-    await fs.unlink(aux, (err => {
-      if (err) 
-        console.log(err);
-      else {
-        console.log(`\nDeleted file: ${aux}`);
-      }
-    }));
-
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
 
@@ -72,7 +61,7 @@ const createMascota = async (req, res) => {
       age,
       color,
       description,
-      image: result.secure_url,
+      image,
       identified,
       timewait,
       adopted,
