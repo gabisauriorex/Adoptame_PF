@@ -1,71 +1,52 @@
 const express = require("express");
+const { expressjwt: jwt } = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
 const cors = require("cors");
 const app = express();
-/* const { auth } = require("express-oauth2-jwt-bearer"); */
-///token opcion 2
-
-const { expressjwt: jwt } = require("express-jwt");
-const jwks = require("jwks-rsa");
-
+const authConfig  =require('./src/auth_config.json')
+const decoded =require('./src/decoded')
 app.use(cors());
 
-//const router = express.Router();
 const port = 3000;
-const domain = "dev-sy67e2ky1xdydqgt.us.auth0.com";
-//========token=== myrian======
 
-/* const jwtToken = auth({
-  audience: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-  issuerBaseURL: "https://dev-sy67e2ky1xdydqgt.us.auth0.com/",
-  tokenSigningAlg: "RS256",
-}); */
 
-//console.log(jwtToken);
-/* const jwtChecked = jwt({
-secret: jwks.expressJwtSecret({
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://${domain}/.well-known/jwks.json`,
-  }), //unless({ path: ["/"] }),
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`,
+  }),
 
-  // Validate the audience and the issuer.
-  audience: "https://Learning-express",
-  issuer: `https://${domain}/`,
+  audience: authConfig.audience,
+  issuer: `https://${authConfig.domain}/`,
   algorithms: ["RS256"],
-});
+}).unless({ path:[ "/" ] });
+
+ 
+  //===================
 
 
+app.use(checkJwt);
 
-console.log(jwtChecked); */
 
-const authConfig = {
-  domain: domain,
-  audience: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-  issuer: `https://${domain}/`,
-  algorithms: ["RS256"],
-};
-
-app.use(
-  jwt({
-    secret: jwks.expressJwtSecret({
-      cache: true,
-      rateLimit: true,
-      jwksRequestsPerMinute: 5,
-      jwksUri: `https://${domain}/.well-known/jwks.json`,
-    }),
-    ...authConfig,
-  }).unless({ path: ["/"] })
-);
 
 app.get("/", (req, res) => console.log("Estas en la landing"));
 
 app.get("/home", (req, res) => {
-  console.log("Ruta protegida");
 
-  const { name, email, nickname } = req.user;
-  res.send(`¡Bienvenido ${name} (${email}) (${nickname})`);
+  const header=req.headers;
+  const user=req.user;
+  console.log(header ,"\n", user)
+  /* console.log({
+    msg: "Your access token was successfully validated!",
+   
+
+  }); */
 });
+
+
+
 
 /* app.use(async (req, res, next) => {
   const error = new Error("Not found");
@@ -82,3 +63,41 @@ app.use(async (error, req, res) => {
 }); */
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+
+
+/* 
+
+jwt
+const jwt = require('jsonwebtoken')
+
+const UserExtractor = (request, response, next) => {
+  const authorization = request.get('authorization')
+  let token = ''
+ 
+  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+    token = authorization.slice(7)
+  }
+
+  console.log(token);
+  
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  console.log(decodedToken.id)
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  const { id: userId } = decodedToken
+
+  request.userId = userId
+
+  next()
+
+
+}
+
+
+module.exports = UserExtractor;
+
+*/
