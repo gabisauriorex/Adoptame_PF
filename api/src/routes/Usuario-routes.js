@@ -8,11 +8,6 @@ const {
   updateUsuario,
 } = require("../controllers-Pet/Usuario-controller");
 
-//const notFound = require('./middleware/notFound.js')
-const handleErrors = require('../middleware/handleError')
-const userExtractor = require('../middleware/UserExtractor')
-
-
 router.get("/", getUsuario); //trae todos los usuarios
 router.get("/:id", usuarioById); //trae por id
 router.post("/", createUsuario); //crea una usuario
