@@ -3,7 +3,6 @@ const { Op } = require("sequelize");
 const Validation = require("./Validation");
 const sumarDias = require("./sumarDias");
 const fs = require("fs");
-//const cloudinary = require("../cloudinary/index")
 
 //CLOUDINARY
 const cloudinary = require('cloudinary').v2;
