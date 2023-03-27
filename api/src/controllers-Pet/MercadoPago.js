@@ -19,15 +19,14 @@ const createPay = async (req,res) =>{
                 quantity:1
             }
         ],
-        payer:{
-            email:email
-        },
+      
         binary_mode: true
     }
     try {
         mercadopago.preferences.create(preference)
         .then(function(response){
             res.status(200).send(response.response.init_point)
+            // res.status(200).send({global:response.body.id})
         }).catch(function(error){res.status(400).send({message:error})})
         
     } catch (error) {
