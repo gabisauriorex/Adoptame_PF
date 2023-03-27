@@ -2,7 +2,12 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+
+  "main": "./index.js",
+  "scripts": {
+    "start": "nodemon -L",
+    "test": "mocha -w ./tests/**/*.spec.js"
+  },
   "dependencies": {
     "acorn": "^8.8.2",
     "abbrev": "^1.1.1",
