@@ -14,13 +14,18 @@
     "bcrypt": "^5.1.0",
     "body": "^5.1.0",
     "body-parser": "^1.19.0",
+    "cloudinary": "^1.35.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
     "dotenv": "^8.6.0",
     "ejs": "^3.1.9",
     "express": "^4.17.1",
+<<<<<<< HEAD
     "express-jwt": "^8.4.1",
+=======
+    "express-fileupload": "^1.4.0",
+>>>>>>> 743857d93d8ea8b13244d162f16e7238250ff5c2
     "express-openid-connect": "^2.12.1",
     "express-validator": "^6.15.0",
     "http-errors": "^2.0.0",
