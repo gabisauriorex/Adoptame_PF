@@ -4,11 +4,16 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 var path = require("path");
 const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 // const {body, validationResult} = require("express-validator");
 
 require("./db.js");
 
 const app = express();
+app.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir: './uploads'
+}));
 /* app.use(cors()); */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
