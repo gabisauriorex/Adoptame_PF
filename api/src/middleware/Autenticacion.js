@@ -20,10 +20,7 @@ const Autenticacion = (req, res, next) => {
     algorithms: ["RS256"],
   }).unless({ path:[ "/" ] });
 
+  console.log("pase por Autenticacion")
   next();
-
-
 }
-
-
 module.exports = Autenticacion;
