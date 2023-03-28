@@ -78,7 +78,9 @@ const createMascota = async (req, res) => {
 };
 
 const getMascotas = async (req, res) => {
-  try {
+
+  try {  
+    // console.log("Estoy en getMascotas")
     const { name } = req.query; //opcion por name
     const pets = await Pet.findAll({
       include: [
@@ -128,7 +130,7 @@ const getMascotas = async (req, res) => {
       res.status(200).send(pets);
     }
   } catch (error) {
-    res.status(400).send({ message: error });
+    res.status(400).send({ message: error.message});
   }
 };
 
