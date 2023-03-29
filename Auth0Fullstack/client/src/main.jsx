@@ -4,28 +4,28 @@ import App from './App'
 import './index.css'
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const {VITE_DOMAIN,VITE_CLIENT_ID,VITE_AUDIENCE}=import.meta.env;
 
+// const {VITE_DOMAIN,VITE_CLIENT_ID,VITE_AUDIENCE}=import.meta.env;
+// console.log(VITE_AUDIENCE, VITE_CLIENT_ID)
+const CLIENT_ID="jypM45J5i7KtX2sBsMPBRnn5RKorvjKa"
+const DOMAIN="dev-ta62vlpo2ibk36hv.us.auth0.com"
 
+// 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <Auth0Provider
-    domain={VITE_DOMAIN}
-    clientId={VITE_CLIENT_ID}
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-      //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'//{VITE_AUDIENCE}
-
-       audience:VITE_AUDIENCE,
-       scope:'openId profile email'
+      cacheLocation="localstorage"
+      domain={DOMAIN}
+      clientId={CLIENT_ID}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+        audience: "Auth0Front",
+        scope:'openId profile email'
     }}
-    
-   //   2 opcionaudience={VITE_AUDIENCE}
-   
-    //scope='openid profile email'
-  >
-    <App />
-  </Auth0Provider>,
-  </React.StrictMode>,
-)
+    >
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>,
+    </Auth0Provider>,
+  );
+  

@@ -4,6 +4,33 @@ import axios from 'axios';
 
 import { useAuth0 ,withAuthenticationRequired} from "@auth0/auth0-react"; //hook
 
+// import {createAuth0Client} from '@auth0/auth0-spa-js';
+
+// const CLIENT_ID="jypM45J5i7KtX2sBsMPBRnn5RKorvjKa"
+// const DOMAIN="dev-ta62vlpo2ibk36hv.us.auth0.com"
+
+// const auth0Client = await createAuth0Client({
+//   domain: {DOMAIN},
+//   client_id: {CLIENT_ID}
+// });
+
+// // Login with redirect
+// await auth0Client.loginWithRedirect({
+//   redirect_uri: 'http://127.0.0.1:5173/'
+// });
+
+// // Get token silently
+// const token = await auth0Client.getTokenSilently();
+
+// const response = await axios('https://my-api.com/data', {
+//   headers: {
+//     Authorization: `Bearer ${token}`
+//   }
+// });
+// const data = await response.json();
+// console.log(data);
+
+
 //const { apiOrigin = "http://localhost:3000", VITE_AUDIENCE }=import.meta.env;
 
 function App() {
@@ -20,7 +47,7 @@ function App() {
   } = useAuth0();
 
             
-  //  const { user,isAuthenticated,loginWithRedirect,isLoading} = useAuth0()
+  //const { user,isAuthenticated,loginWithRedirect,isLoading} = useAuth0()
   
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -52,13 +79,13 @@ function App() {
       },
     });
 
-    const responseData = await response.data.json();
+    const responseData = await response.data;
 
-    console.log(responseData)
-    return responseData;
+    console.log(response)
+    return response.data;
    
   } catch (error) {
-     console.log(error.message)
+     console.log("mensaje de error", error.message)
   }
 
  }
@@ -92,11 +119,11 @@ function App() {
               isAuthenticated &&(
              
                  <>
-                <h3>{user.nickname}</h3>
+                {/* <h3>{user.nickname}</h3>
                 <img src={user.picture} alt=''/>
-                <h4>{user.email}</h4>
+                <h4>{user.email}</h4> */}
                 <pre style={{backgroundColor:'black' , color:'yellowgreen'}}>
-                    {JSON.stringify(user,null,1)}
+                    {JSON.stringify(user,null,2)}
                 
                 </pre>
                  </> 

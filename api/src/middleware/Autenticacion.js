@@ -2,11 +2,12 @@ const express = require("express");
 const { expressjwt: jwt } = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const cors = require("cors");
-const app = express();
+const router = express();
 const authConfig  = require('../auth_config.json');
-app.use(cors());
+router.use(cors());
 
 const Autenticacion = (req, res, next) => {
+  console.log("Entrando a Autenticacion")
   const checkJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
       cache: true,
@@ -18,9 +19,25 @@ const Autenticacion = (req, res, next) => {
     audience: authConfig.audience,
     issuer: `https://${authConfig.domain}/`,
     algorithms: ["RS256"],
-  }).unless({ path:[ "/" ] });
+  }); 
 
-  console.log("pase por Autenticacion")
-  next();
+  
+  router.use(async (req, res, next) => {
+    const error = new Error("Not found");
+    error.status = 404;
+    error.status = 403;
+    next(error);
+    });
+    
+    router.use(async (error, req, res) => {
+    const status = error.status || 500;
+    const message = error.message || "internal server error";
+    
+    //res.sendStatus(status);
+    res.status(status).send(message);
+    });
+ 
+  console.log("pase por Autenticacion");
+  return checkJwt;
 }
 module.exports = Autenticacion;

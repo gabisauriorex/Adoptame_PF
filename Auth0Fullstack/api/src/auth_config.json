@@ -1,5 +1,7 @@
+
 {
-  "domain": "dev-sy67e2ky1xdydqgt.us.auth0.com",
-  "clientId": "df9nScIrpc4Fs14m0i00styk0maz2CyN",
-  "audience": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+  "domain": "dev-ta62vlpo2ibk36hv.us.auth0.com",
+  "clientId": "nbyOhVWt3GDmPXZqqMkVcwUkBMrhSavj",
+  "audience": "Auth0Front"
 }
+ 
