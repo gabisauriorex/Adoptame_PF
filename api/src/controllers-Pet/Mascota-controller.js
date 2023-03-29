@@ -130,6 +130,7 @@ const getMascotas = async (req, res) => {
       res.status(200).send(pets);
     }
   } catch (error) {
+    console.log("me tiro un error de autenticacion")
     res.status(400).send({ message: error.message});
   }
 };
