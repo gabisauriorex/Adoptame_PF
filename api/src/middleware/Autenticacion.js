@@ -10,7 +10,7 @@ const authConfig  = require('../auth_config.json');
   console.log("Entrando a Autenticacion") */
 
 
-  const verifyJwt = jwt({
+ const verifyJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
       cache: true,
       rateLimit: true,
