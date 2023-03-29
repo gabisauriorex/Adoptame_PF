@@ -12,7 +12,7 @@ const userAutenticated = async (req, res, next) => {
             authorization: `Bearer ${accessToken}`
           }
         })  
-  
+        res.json(response)
       }catch(error) {
          res.send(error.message);
        }
