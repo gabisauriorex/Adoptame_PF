@@ -8,7 +8,7 @@ router.use(cors());
 
 const Autenticacion = (req, res, next) => {
   console.log("Entrando a Autenticacion")
-  const checkJwt = jwt({
+  const verifyJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
       cache: true,
       rateLimit: true,
@@ -38,6 +38,6 @@ const Autenticacion = (req, res, next) => {
     });
  
   console.log("pase por Autenticacion");
-  return checkJwt;
+  return verifyJwt;
 }
 module.exports = Autenticacion;
