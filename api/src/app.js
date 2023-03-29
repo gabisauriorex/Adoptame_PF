@@ -7,7 +7,8 @@ const cookieParser = require("cookie-parser");
 // const {body, validationResult} = require("express-validator");
 
 require("./db.js");
-
+const verifyJwt=require('./middleware/Autenticacion');
+const secure=require('./middleware/middlewareToken');
 const app = express();
 /* app.use(cors()); */
 app.use(cors());
@@ -37,7 +38,19 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', routes);
+verifyJwt.unless({path:['/']})
+app.use(verifyJwt);
+app.use('/', secure,routes);
+
+
+
+   app.use(async (req, res, next) => {
+    const error = new Error("Not found");
+    error.status = 404;
+    error.status = 403;
+    error.status = 401;
+    next(error);
+    });
 
 // Error catching endware.
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars

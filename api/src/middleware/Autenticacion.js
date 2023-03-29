@@ -1,14 +1,16 @@
-const express = require("express");
+
 const { expressjwt: jwt } = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
-const cors = require("cors");
-const router = express();
-const authConfig  = require('../auth_config.json');
-router.use(cors());
 
-const Autenticacion = (req, res, next) => {
-  console.log("Entrando a Autenticacion")
-  const verifyJwt = jwt({
+
+const authConfig  = require('../auth_config.json');
+
+
+/* const Autenticacion = (req, res, next) => {
+  console.log("Entrando a Autenticacion") */
+
+
+ const verifyJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
       cache: true,
       rateLimit: true,
@@ -22,7 +24,24 @@ const Autenticacion = (req, res, next) => {
   }); 
 
   
-  router.use(async (req, res, next) => {
+ /* 
+  console.log("Ya esta encriptado ");
+  console.log(checkJwt) */
+
+//}
+module.exports = verifyJwt;
+
+
+
+
+//const express = require("express");
+//const router = express();
+//router.use(cors());
+
+
+
+
+/*   router.use(async (req, res, next) => {
     const error = new Error("Not found");
     error.status = 404;
     error.status = 403;
@@ -35,9 +54,4 @@ const Autenticacion = (req, res, next) => {
     
     //res.sendStatus(status);
     res.status(status).send(message);
-    });
- 
-  console.log("pase por Autenticacion");
-  return verifyJwt;
-}
-module.exports = Autenticacion;
+    }); */
