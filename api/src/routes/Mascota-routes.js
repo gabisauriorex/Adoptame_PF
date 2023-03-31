@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const routerPet = express.Router();
 
 const {
   createMascota,
@@ -8,14 +8,11 @@ const {
   deleteMascota,
   updateMascota,
 } = require("../controllers-Pet/Mascota-controller");
-const Autenticacion = require("../middleware/Autenticacion");
 
-console.log(Autenticacion)
+routerPet.get("/", getMascotas); //trae todas las mascotas
+routerPet.get("/:id", mascotaById); //trae por id
+routerPet.post("/", createMascota); //crea una mascota
+routerPet.put("/:id", updateMascota); //actualiza una mascota
+routerPet.delete("/:id", deleteMascota); //elimina una mascota
 
-router.get("/", getMascotas); //trae todas las mascotas
-router.get("/:id", Autenticacion, mascotaById); //trae por id
-router.post("/", Autenticacion, createMascota); //crea una mascota
-router.put("/:id",Autenticacion, updateMascota); //actualiza una mascota
-router.delete("/:id", deleteMascota); //elimina una mascota
-
-module.exports = router;
+module.exports = routerPet;
