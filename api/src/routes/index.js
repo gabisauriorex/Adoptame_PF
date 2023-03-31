@@ -11,5 +11,6 @@ const allRoutes = require("./allRoutes");
  //checkJwt.unless({ path:[ "/" ] })
 router.use("/api",allRoutes);
 
+
 module.exports = router;
 
