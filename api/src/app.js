@@ -10,6 +10,8 @@ require("./db.js");
 const verifyJwt=require('./middleware/Autenticacion');
 const secure=require('./middleware/middlewareToken');
 const app = express();
+
+
 /* app.use(cors()); */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
