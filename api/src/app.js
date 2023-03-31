@@ -7,8 +7,8 @@ const cookieParser = require("cookie-parser");
 // const {body, validationResult} = require("express-validator");
 
 require("./db.js");
-const verifyJwt=require('./middleware/Autenticacion');
-const secure=require('./middleware/middlewareToken');
+//const verifyJwt=require('./middleware/Autenticacion');
+//const secure=require('./middleware/middlewareToken');
 const app = express();
 /* app.use(cors()); */
 app.use(cors());
@@ -38,11 +38,10 @@ app.use((req, res, next) => {
   next();
 });
 
-verifyJwt.unless({path:['/']})
-app.use(verifyJwt);
-app.use('/', secure,routes);
-
-
+//verifyJwt.unless({path:['/']})
+//app.use(verifyJwt);
+//app.use('/', secure,routes);
+app.use('/',routes);
 
    app.use(async (req, res, next) => {
     const error = new Error("Not found");
