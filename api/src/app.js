@@ -9,6 +9,8 @@ const cookieParser = require("cookie-parser");
 require("./db.js");
 
 const app = express();
+
+
 /* app.use(cors()); */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
