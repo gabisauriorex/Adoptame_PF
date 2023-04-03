@@ -25,7 +25,7 @@ const routes = require("./routes/index.js");
 
 app.name = "API";
 
-// "http://localhost:3000" "https://arielzarate.github.io"
+// "http://localhost:3000" 
 
 app.use(cookieParser());
 app.use(morgan("dev"));
@@ -40,18 +40,18 @@ app.use((req, res, next) => {
   next();
 });
 
-//verifyJwt.unless({path:['/']})
+//verifyJwt.unless({path:['/',]})
 //app.use(verifyJwt);
-//app.use('/', secure,routes);
 app.use('/',routes);
 
-   app.use(async (req, res, next) => {
+
+/*    app.use(async (req, res, next) => {
     const error = new Error("Not found");
     error.status = 404;
     error.status = 403;
     error.status = 401;
     next(error);
-    });
+    }); */
 
 // Error catching endware.
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
