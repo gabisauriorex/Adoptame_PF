@@ -7,7 +7,7 @@ const Diseases = require("./Diseases-routes");
 const Location = require("./Location-routes");
 const Usuario = require("./Usuario-routes");
 const Payment = require("./Payment-routes");
-
+const Admin = require("./Admin-Routes")
   //===================
   
 router2.get("/", (req, res) => {
@@ -19,6 +19,6 @@ router2.use("/diseases", Diseases);
 router2.use("/locations", Location);
 router2.use("/users", Usuario);
 router2.use("/payments",Payment);
-
+router2.use("/admin", Admin)
 
 module.exports = router2;

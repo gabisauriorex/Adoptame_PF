@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 
 const createUsuario = async (req, res) => {
   try {
-    let { fullname, address, phone, email, pet, location } = req.body;
+    let { fullname, address, phone, email, location } = req.body;
 
     //const msg = await Validation(req.body);
     //if (msg) throw new Error(msg);
@@ -17,7 +17,7 @@ const createUsuario = async (req, res) => {
       phone,
       email,
     });
-    await newUsuario.addPet(pet);
+    // await newUsuario.addPet(pet);
     await newUsuario.addLocation(location);
     newUsuario
       ? res.status(200).send("Usuario created successfully 👌")
@@ -33,7 +33,7 @@ const getUsuario = async (req, res) => {
 
     const users = await User.findAll({
       include: [
-        { model: Pet, attributes: ["id", "name"], through: { attributes: [] } },
+        // { model: Pet, attributes: ["id", "name"], through: { attributes: [] } },
         {
           model: Location,
           attributes: ["province"],
@@ -48,11 +48,11 @@ const getUsuario = async (req, res) => {
           fullname: { [Op.iLike]: `%${name}%` },
         },
         include: [
-          {
-            model: Pet,
-            attributes: ["id", "name"],
-            through: { attributes: [] },
-          },
+          // {
+          //   model: Pet,
+          //   attributes: ["id", "name"],
+          //   through: { attributes: [] },
+          // },
           {
             model: Location,
             attributes: ["id", "province"],
@@ -75,11 +75,11 @@ const usuarioById = async (req, res) => {
 
     const userById = await User.findByPk(id, {
       include: [
-        {
-          model: Pet,
-          attributes: ["id", "name"],
-          through: { attributes: [] },
-        },
+        // {
+        //   model: Pet,
+        //   attributes: ["id", "name"],
+        //   through: { attributes: [] },
+        // },
         {
           model: Location,
           attributes: ["id", "province"],
