@@ -4,11 +4,8 @@ mercadopago.configure({
     access_token:MPTOKEN
 })
 
+
 const getPay = async (req,res) =>{
-    let hola = "hola"
-   res.status(200).send({hola})
-}
-const createPay = async (req,res) =>{
     const {email} = req.body
     let preference = {
         items: [
@@ -42,5 +39,5 @@ const createPay = async (req,res) =>{
 
 module.exports = {
     getPay,
-    createPay
+
 }
