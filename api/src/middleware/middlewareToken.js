@@ -12,13 +12,9 @@ const middlewareToken = async (req, res, next) => {
             authorization: `Bearer ${accessToken}`
           }
         })  
-<<<<<<< HEAD:api/src/middleware/userAutenticated.js
-        res.send(200).json(response)
-=======
 
         console.log('Datos del middleware: \n', response.data)
   
->>>>>>> 9f773f5c0259dbaad4525c5c8e4528a9c8c53007:api/src/middleware/middlewareToken.js
       }catch(error) {
          res.send(error.message);
        }
