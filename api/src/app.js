@@ -25,7 +25,7 @@ const routes = require("./routes/index.js");
 
 app.name = "API";
 
-// "http://localhost:3000" "https://arielzarate.github.io"
+// "http://localhost:3000" 
 
 app.use(cookieParser());
 app.use(morgan("dev"));
