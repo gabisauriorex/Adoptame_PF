@@ -50,15 +50,7 @@ module.exports = (sequelize) => {
           notNull: {
             msg: "La raza no puede estar vacia",
           },
-          isAlpha: {
-            args: true,
-            msg: "La raza solo puede contener letras",
-          },
-          len: {
-            arg: [3, 20],
-            msg: "El numero de caracteres de la raza debe tener entre 3 y 20 caracteres",
-          },
-        },
+         },
       },
       height: {
         type: DataTypes.FLOAT,
@@ -90,14 +82,6 @@ module.exports = (sequelize) => {
         validate: {
           notNull: {
             msg: "color no puede estar vacio",
-          },
-          isAlpha: {
-            args: true,
-            msg: "El color solo puede contener letras",
-          },
-          len: {
-            args: [3, 20],
-            msg: "El numero de caracteres del color debe tener entre 3 y 20 caracteres",
           },
         },
       },
