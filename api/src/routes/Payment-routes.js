@@ -4,7 +4,7 @@ const { createPay, getPay } = require("../controllers-Pet/MercadoPago");
 const router = express.Router();
 
 
-router.get("/",getPay)
-router.post("/",createPay)
+router.get("/",createPay)
+router.post("/",getPay)
 
 module.exports = router;
