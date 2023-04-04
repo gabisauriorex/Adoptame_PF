@@ -6,7 +6,7 @@ const middlewareToken = async (req, res, next) => {
   try{
         console.log('aca tomo el token ')
         const accessToken = req.headers.authorization.split(" ")[1];
-      
+      console.log(accessToken)
         const response = await axios(`https://${authConfig.domain}/userinfo`, {
           headers: {
             authorization: `Bearer ${accessToken}`
