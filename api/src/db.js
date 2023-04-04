@@ -8,6 +8,7 @@ const mLocation = require("./models/Location");
 const mVaccines = require("./models/Vaccines");
 const mUser = require("./models/User");
 const mUserLogin = require('./models/UserLogin');
+const mReview = require('./models/Review');
 const sequelize = new Sequelize(
  URL,
  //`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -24,7 +25,8 @@ mDiseases(sequelize);
 mVaccines(sequelize);
 mUser(sequelize);
 mUserLogin(sequelize);
-const { Pet, Location, Diseases, Vaccines, User, UserLogin } = sequelize.models;
+mReview(sequelize);
+const { Pet, Location, Diseases, Vaccines, User, Review } = sequelize.models;
 
 Pet.belongsToMany(Diseases, { through: "pet_diseases" });
 Diseases.belongsToMany(Pet, { through: "pet_diseases" });
@@ -37,6 +39,9 @@ User.belongsToMany(Pet, {through: "user_pets"});
 Pet.belongsToMany(User, {through: "user_pets"});
 User.belongsToMany(Location, {through: "user_locations"});
 Location.belongsToMany(User, {through: "user_locations"});
+
+Review.belongsToMany(Pet, {through: "review_pet"});
+Pet.belongsToMany(Review, {through: "review_pet"});
 
 
 module.exports = {
