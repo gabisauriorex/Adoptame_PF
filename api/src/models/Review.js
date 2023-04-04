@@ -14,11 +14,6 @@ module.exports = (sequelize) => {
       },
       title: {
         type: DataTypes.STRING,
-        // validate: {
-        //   notNull: {
-        //     msg: "El titulo no puede estar vacio",
-        //   },
-        // },
       },
       puntuaction:{
         type: DataTypes.ENUM("1","2","3","4","5"),
@@ -26,12 +21,12 @@ module.exports = (sequelize) => {
       Comment: {
         type: DataTypes.STRING,
         allowNull: true,
-        // validate: {
-        //     len: {
-        //         arg: [0, 255],
-        //         msg: "El numero de caracteres del comentario no puede tener más de 255 caracteres",
-        //       },
-        // },
+        validate: {
+            len: {
+                arg: [0, 255],
+                msg: "El numero de caracteres del comentario no puede tener más de 255 caracteres",
+              },
+        },
       },
     },
     {
