@@ -69,8 +69,7 @@ const getMascotas = async (req, res) => {
   try {  
     // console.log("Estoy en getMascotas")
     const { name } = req.query; //opcion por name
-     const pets = await Pet.findAll(
-      {
+    const pets = await Pet.findAll({
       include: [
         {
           model: Vaccines,
@@ -88,8 +87,7 @@ const getMascotas = async (req, res) => {
           through: { attributes: [] },
         },
       ],
-    }
-    );
+    });
 
     if (name) {
       const queryPets = await Pet.findAll({
@@ -162,11 +160,15 @@ const deleteMascota = async (req, res) => {
 
     const mascotaById = await Pet.findByPk(id);
 
-    if (mascotaById) {
+    if (mascotaById.adopted==false) {
       mascotaById.adopted = true;
       //console.log(mascotaById)
       await mascotaById.save();
       res.json("La mascota fue adoptada con exito");
+    }else if(mascotaById.adopted==false){
+      mascotaById.adopted = false;
+      await mascotaById.save();
+      res.json("La mascota fue desadoptada con exito");
     } else {
       res.status(400).json("There are no pets with that id in the db");
     }
@@ -216,7 +218,7 @@ const updateMascota = async (req, res) => {
       //       mascotaById.prop = aux;
       //   }
 
-      mascotaById.save();
+      await mascotaById.save();
       console.log(mascotaById);
       res.json("El cambio fue realizado con exito");
     }
