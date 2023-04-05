@@ -35,8 +35,8 @@ Vaccines.belongsToMany(Pet, { through: "pet_vaccines" });
 Pet.belongsToMany(Location, { through: "pet_locations" });
 Location.belongsToMany(Pet, { through: "pet_locations" });
 
-User.belongsToMany(Pet, {through: "user_pets"});
-Pet.belongsToMany(User, {through: "user_pets"});
+User.hasMany(Pet,{ foreingKey:"ownerId"});
+Pet.belongsTo(User, { foreingKey:"ownerId"});
 User.belongsToMany(Location, {through: "user_locations"});
 Location.belongsToMany(User, {through: "user_locations"});
 
