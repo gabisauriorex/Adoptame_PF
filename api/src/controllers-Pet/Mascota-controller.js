@@ -19,7 +19,6 @@ const createMascota = async (req, res) => {
       description,
       image,
       identified,
-      timewait,
       adopted,
       vaccine,
       disease,
@@ -28,16 +27,8 @@ const createMascota = async (req, res) => {
 
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
-
-    if (identified==false) {
-      var d = new Date();
-      timewait = sumarDias(d, 30);
-      adopted = false;
-    } else {
-      timewait = new Date();
-      adopted = false;
-    }
-
+      
+    timewait = new Date();
     const newMascota = await Pet.create({
       name,
       animal,
