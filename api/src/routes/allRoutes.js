@@ -8,6 +8,7 @@ const Location = require("./Location-routes");
 const Usuario = require("./Usuario-routes");
 const Payment = require("./Payment-routes");
 const Admin = require("./Admin-Routes")
+const Adoption = require("./Adoption-routes")
   //===================
   
 router2.get("/", (req, res) => {
@@ -20,5 +21,5 @@ router2.use("/locations", Location);
 router2.use("/users", Usuario);
 router2.use("/payments",Payment);
 router2.use("/admin", Admin)
-
+router2.use("/adoption",Adoption)
 module.exports = router2;

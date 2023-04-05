@@ -29,13 +29,13 @@ const createMascota = async (req, res) => {
     const msg = await Validation(req.body);
     if (msg) throw new Error(msg);
 
-    if (identified) {
+    if (identified==false) {
       var d = new Date();
       timewait = sumarDias(d, 30);
       adopted = false;
     } else {
       timewait = new Date();
-      adopted = true;
+      adopted = false;
     }
 
     const newMascota = await Pet.create({

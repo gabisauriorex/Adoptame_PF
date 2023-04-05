@@ -33,7 +33,7 @@ const getUsuario = async (req, res) => {
 
     const users = await User.findAll({
       include: [
-        // { model: Pet, attributes: ["id", "name"], through: { attributes: [] } },
+        { model: Pet, attributes: ["id", "name"]},
         {
           model: Location,
           attributes: ["province"],
@@ -48,11 +48,10 @@ const getUsuario = async (req, res) => {
           fullname: { [Op.iLike]: `%${name}%` },
         },
         include: [
-          // {
-          //   model: Pet,
-          //   attributes: ["id", "name"],
-          //   through: { attributes: [] },
-          // },
+          {
+            model: Pet,
+            attributes: ["id", "name"],
+          },
           {
             model: Location,
             attributes: ["id", "province"],
@@ -75,11 +74,10 @@ const usuarioById = async (req, res) => {
 
     const userById = await User.findByPk(id, {
       include: [
-        // {
-        //   model: Pet,
-        //   attributes: ["id", "name"],
-        //   through: { attributes: [] },
-        // },
+        {
+          model: Pet,
+          attributes: ["id", "name"],
+        },
         {
           model: Location,
           attributes: ["id", "province"],
@@ -103,6 +101,7 @@ const deleteUsuario = async (req, res) => {
     const userById = await User.findByPk(id);
 
     if (userById) {
+      userById.disabled = true;
       await userById.save();
       res.json("El usuario fue borrado con exito");
     } else {
