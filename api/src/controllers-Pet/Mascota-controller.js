@@ -165,7 +165,7 @@ const deleteMascota = async (req, res) => {
       //console.log(mascotaById)
       await mascotaById.save();
       res.json("La mascota fue adoptada con exito");
-    }else if(mascotaById.adopted==false){
+    }else if(mascotaById.adopted==true){
       mascotaById.adopted = false;
       await mascotaById.save();
       res.json("La mascota fue desadoptada con exito");
