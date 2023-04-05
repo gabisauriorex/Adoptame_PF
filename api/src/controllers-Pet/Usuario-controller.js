@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 
 const createUsuario = async (req, res) => {
   try {
-    let { fullname, address, phone, email, pet, location } = req.body;
+    let { fullname, address, phone, email, location } = req.body;
 
     //const msg = await Validation(req.body);
     //if (msg) throw new Error(msg);
@@ -17,7 +17,7 @@ const createUsuario = async (req, res) => {
       phone,
       email,
     });
-    await newUsuario.addPet(pet);
+    // await newUsuario.addPet(pet);
     await newUsuario.addLocation(location);
     newUsuario
       ? res.status(200).send("Usuario created successfully 👌")
@@ -33,7 +33,7 @@ const getUsuario = async (req, res) => {
 
     const users = await User.findAll({
       include: [
-        { model: Pet, attributes: ["id", "name"], through: { attributes: [] } },
+        { model: Pet, attributes: ["id", "name"]},
         {
           model: Location,
           attributes: ["province"],
@@ -51,7 +51,6 @@ const getUsuario = async (req, res) => {
           {
             model: Pet,
             attributes: ["id", "name"],
-            through: { attributes: [] },
           },
           {
             model: Location,
@@ -78,7 +77,6 @@ const usuarioById = async (req, res) => {
         {
           model: Pet,
           attributes: ["id", "name"],
-          through: { attributes: [] },
         },
         {
           model: Location,
@@ -103,6 +101,7 @@ const deleteUsuario = async (req, res) => {
     const userById = await User.findByPk(id);
 
     if (userById) {
+      userById.disabled = true;
       await userById.save();
       res.json("El usuario fue borrado con exito");
     } else {
