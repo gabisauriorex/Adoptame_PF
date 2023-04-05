@@ -178,7 +178,7 @@ const deleteMascota = async (req, res) => {
 };
 
 const updateMascota = async (req, res) => {
-  const { id } = req.params;
+  // const { id } = req.params;
   const {
     name,
     animal,
@@ -193,6 +193,7 @@ const updateMascota = async (req, res) => {
     identified,
     timewait,
     adopted,
+    id
   } = req.body;
 
   try {
