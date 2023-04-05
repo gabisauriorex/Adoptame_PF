@@ -69,7 +69,8 @@ const getMascotas = async (req, res) => {
   try {  
     // console.log("Estoy en getMascotas")
     const { name } = req.query; //opcion por name
-    const pets = await Pet.findAll({
+     const pets = await Pet.findAll(
+      {
       include: [
         {
           model: Vaccines,
@@ -87,7 +88,8 @@ const getMascotas = async (req, res) => {
           through: { attributes: [] },
         },
       ],
-    });
+    }
+    );
 
     if (name) {
       const queryPets = await Pet.findAll({
