@@ -114,7 +114,7 @@ const deleteUsuario = async (req, res) => {
 
 const updateUsuario = async (req, res) => {
   const { id } = req.params;
-  const { fullname, address, phone, email } = req.body;
+  const { fullname, address, phone, email, isAdmin } = req.body;
 
   try {
     if (!id) {
@@ -125,8 +125,8 @@ const updateUsuario = async (req, res) => {
       if (address) userById.address = address;
       if (phone) userById.phone = phone;
       if (email) userById.email = email;
-
-      userById.save();
+      if (isAdmin) userById.isAdmin = isAdmin
+      await userById.save();
       console.log(userById);
       res.json("El cambio fue realizado con exito");
     }
